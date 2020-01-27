@@ -2,6 +2,7 @@ import { Component, OnInit, OnChanges, ViewChild, AfterViewInit } from '@angular
 import { MoviesService } from './core/services';
 import { Movie } from './shared/models';
 import { jqxScrollViewComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxscrollview';
+import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-root',
   providers: [MoviesService],
@@ -53,18 +54,19 @@ export class AppComponent implements OnInit, OnChanges, AfterViewInit {
   constructor(private moviesService: MoviesService) { }
 
   ngAfterViewInit(): void {
-    // this.jqxGrid.createComponent(this.gridSettings);
-    // this.myScrollView.createWidget(this.scrollViewSettings);
+    this.moviesService.getMovies()
+    .subscribe(movies => {
+
+      this.movies = movies;
+
+      const posters = document.getElementsByClassName('photo');
+      for (let index = 0; index < posters.length; index++) {
+        (posters[index] as HTMLElement).style.backgroundImage = `url(${movies[index].poster})`;
+      }
+    });
   }
 
   ngOnInit(): void {
-    this.moviesService.getMovies().subscribe(movies => {
-      this.source = {
-        localdata: movies,
-        datatype: 'array',
-      };
-      this.dataAdapter =  new jqx.dataAdapter(this.source);
-    });
   }
 
   ngOnChanges(): void {
