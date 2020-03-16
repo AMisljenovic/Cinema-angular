@@ -63,6 +63,19 @@ export class AppComponent implements OnInit, OnChanges, AfterViewInit {
       for (let index = 0; index < posters.length; index++) {
         (posters[index] as HTMLElement).style.backgroundImage = `url(${movies[index].poster})`;
       }
+
+      const nowPlayingPosters = document.getElementsByClassName('all-movies-poster');
+
+      for (let index = 0; index < nowPlayingPosters.length; index++) {
+        (nowPlayingPosters[index] as HTMLImageElement).src = movies[index].poster;
+      }
+
+      const comingSoonPosters = document.getElementsByClassName('all-movies-poster-coming');
+
+      for (let index = 0; index < nowPlayingPosters.length; index++) {
+        (comingSoonPosters[index] as HTMLImageElement).src = movies[index + 2].poster;
+      }
+
     });
   }
 

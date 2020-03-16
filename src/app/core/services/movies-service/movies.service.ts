@@ -13,7 +13,7 @@ export class MoviesService {
   constructor(private http: HttpClient) { }
 
   getMovies(): Observable<Movie[]> {
-    const url = 'http://localhost:5000/api/movies';
+    const url = 'https://localhost:5001/api/movies';
     // const url = 'https://localhost:44361/api/movies';
 
   //  return this.http.get(url).subscribe(response => {

@@ -42,8 +42,8 @@ h1 {
 .all-movies {
     display: flex;
     justify-content: space-between;
-    padding-left: 100px;
-    padding-right: 100px;
+    padding-left: 20%;
+    padding-right: 20%;
     background-image: url("../assets/slick.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -52,4 +52,27 @@ h1 {
 .all-movies-poster {
     width: 150px;
     height: 200px;
+    cursor: pointer;
+}
+
+.all-movies-poster-coming {
+    width: 150px;
+    height: 200px;
+    cursor: pointer;
+}
+
+ img:hover {
+    opacity: 0.8;
+}
+
+footer {
+    background-color: #343a40!important;
+    margin-top: 2%;
+    display: flex;
+    justify-content: center;
+}
+
+.footer-paragraph {
+    font-size: 20px;
+    color: white;
 }
