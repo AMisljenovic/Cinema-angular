@@ -9,7 +9,7 @@
 
 <div class="wrapper">
 
-  <div id="wrapper" *ngIf="movieIsSelected">
+  <div id="wrapper" *ngIf="!movieIsSelected">
   <!-- [slideShow]="true" -->
     <jqxScrollView id="scroll-view" #myScrollView [width]="1000" [height]="425">
       <div class="photo"></div>
@@ -42,7 +42,7 @@
 </div>
 
   <app-movie-details
-  *ngIf="!movieIsSelected"
+  *ngIf="movieIsSelected"
   [selectedMovie]="selectedMovie"
   ></app-movie-details>
 

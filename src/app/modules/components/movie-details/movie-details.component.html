@@ -1,7 +1,7 @@
 <div id="wrapper">
   <div id="title">
     <h1>{{selectedMovie.title}}</h1>
-    <h2 class="runtime">{{selectedMovie.rated}}|{{selectedMovie.runtime}}
+    <h2 class="pg-rated-runtime">{{selectedMovie.rated}} | {{selectedMovie.runtime}}
       <br> {{selectedMovie.released}}
     </h2>
   </div>
@@ -11,9 +11,9 @@
       <img class="poster" src={{selectedMovie.poster}}>
       <h2 class="plot-header">Plot</h2>
       <p class="plot-text">{{selectedMovie.plot}}</p>
+      <h2 class="plot-header">Cast</h2>
+      <p class="plot-text">{{selectedMovie.actors}}</p>
     </div>
-      
-
   </div>
 
 </div>

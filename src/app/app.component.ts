@@ -90,7 +90,7 @@ export class AppComponent implements OnInit, OnChanges, AfterViewInit {
  }
 
  selectMovie(event: any) {
-   const id = event.currentTarget.id;
+   const id = event.currentTarget.id - 1;
    this.selectedMovie = this.movies[id];
    this.movieIsSelected = true;
  }
