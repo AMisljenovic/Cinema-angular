@@ -1,0 +1,54 @@
+#wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-top: 7%;
+}
+
+h1 {
+  align-self: center;
+  margin-bottom: 0.5%;
+  color: #FFC700;
+  -webkit-text-stroke-color: black;
+  -webkit-text-stroke-width: thin;
+}
+
+#title {
+  display: flex;
+  flex-direction: column;
+  border-bottom-style: inset;
+  border-color: black;
+}
+
+.plot {
+  display: flex;
+  flex-direction: row;
+  margin-top: 2%;
+}
+
+.image-plot {
+  display: flex;
+  flex-direction: column;
+}
+
+.runtime {
+  margin-top: 1%;
+  margin-bottom: 1%;
+  align-self: center;
+}
+
+.poster {
+  width: 30%;
+  height: 55%;
+  margin-left: 5%;
+}
+
+.plot-header {
+  margin-left: 20%;
+  margin-bottom: 1%;
+}
+
+.plot-text {
+  width: 30%;
+  margin-left: 5%;
+  font-size: 18px;
+}

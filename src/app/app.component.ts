@@ -2,7 +2,7 @@ import { Component, OnInit, OnChanges, ViewChild, AfterViewInit } from '@angular
 import { MoviesService } from './core/services';
 import { Movie } from './shared/models';
 import { jqxScrollViewComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxscrollview';
-import { map } from 'rxjs/operators';
+
 @Component({
   selector: 'app-root',
   providers: [MoviesService],
@@ -13,12 +13,12 @@ import { map } from 'rxjs/operators';
 export class AppComponent implements OnInit, OnChanges, AfterViewInit {
 
   @ViewChild('myScrollView', {static: false}) myScrollView: jqxScrollViewComponent;
-  // @ViewChild('grid', {static: false}) jqxGrid: jqxGridComponent;
 
   movies: Movie[];
-
+  selectedMovie: Movie;
   public source;
   public dataAdapter;
+  movieIsSelected = false;
 
   public columns: jqwidgets.GridColumn[] = [
     { text: 'Poster', datafield: 'poster', width: 200, cellsrenderer: this.imagerenderer },
@@ -87,5 +87,11 @@ export class AppComponent implements OnInit, OnChanges, AfterViewInit {
 
   imagerenderer(row, datafield, value) {
     return '<img style="margin-left: 5px;" height="200" width="200" src="' + value + '"/>';
+ }
+
+ selectMovie(event: any) {
+   const id = event.currentTarget.id;
+   this.selectedMovie = this.movies[id];
+   this.movieIsSelected = true;
  }
 }

@@ -1,47 +1,53 @@
+<nav class="navbar fixed-top navbar-dark bg-dark">
+  <img width="150" height="60" src="assets/Logo.png">
+  <div  class="navbar">
+    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+    <a class="nav-link" href="#">Movies</a>
+    <a class="nav-link" href="#">About us</a>
+  </div>
+</nav>
 
-  <nav class="navbar fixed-top navbar-dark bg-dark">
-    <img width="150" height="60" src="assets/Logo.png">
-    <div  class="navbar">
-      <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      <a class="nav-link" href="#">Movies</a>
-      <a class="nav-link" href="#">About us</a>
-    </div>
-  </nav>
+<div class="wrapper">
 
-  <div id="wrapper">
+  <div id="wrapper" *ngIf="movieIsSelected">
   <!-- [slideShow]="true" -->
-  <!-- <div class="scrollView"> -->
-    <jqxScrollView id="scroll-view" [slideShow]="true" #myScrollView [width]="1000" [height]="425">
+    <jqxScrollView id="scroll-view" #myScrollView [width]="1000" [height]="425">
       <div class="photo"></div>
       <div class="photo"></div>
       <div class="photo"></div>
       <div class="photo"></div>
       <div class="photo"></div>
     </jqxScrollView>
-  <!-- </div> -->
 
   <h1>
     Now playing
   </h1>
   <div class="all-movies">
-    <img class="all-movies-poster">
-    <img class="all-movies-poster">
-    <img class="all-movies-poster">
-    <img class="all-movies-poster">
-    <img class="all-movies-poster">
+    <img id="1" class="all-movies-poster" (click)="selectMovie($event)" >
+    <img id="2" class="all-movies-poster" (click)="selectMovie($event)" >
+    <img id="3" class="all-movies-poster" (click)="selectMovie($event)" >
+    <img id="4" class="all-movies-poster" (click)="selectMovie($event)" >
+    <img id="5" class="all-movies-poster" (click)="selectMovie($event)" >
   </div>
   <h1>
     Coming soon
   </h1>
   <div class="all-movies">
-    <img class="all-movies-poster-coming">
-    <img class="all-movies-poster-coming">
-    <img class="all-movies-poster-coming">
-    <img class="all-movies-poster-coming">
-    <img class="all-movies-poster-coming">
+    <img id="6" class="all-movies-poster-coming">
+    <img id="7" class="all-movies-poster-coming">
+    <img id="8" class="all-movies-poster-coming">
+    <img id="9" class="all-movies-poster-coming">
+    <img id="10" class="all-movies-poster-coming">
   </div>
+</div>
+
+  <app-movie-details
+  *ngIf="!movieIsSelected"
+  [selectedMovie]="selectedMovie"
+  ></app-movie-details>
 
   <footer>
-    <p class="footer-paragraph">© Copyright 2020 - Cinem8</p>
+    <p class="footer-paragraph">© Copyright 2020 - Cinemate</p>
   </footer>
 </div>
+

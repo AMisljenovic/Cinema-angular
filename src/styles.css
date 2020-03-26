@@ -2,4 +2,6 @@
 body {
     background-color:#c9c9c9;
     margin: 0px;
+    display: flex;
+    flex-direction: column;
 }
