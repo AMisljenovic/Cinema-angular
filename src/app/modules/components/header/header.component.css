@@ -12,3 +12,12 @@ div[role=row] {
   color: white;
   font-size: 24px;
 }
+
+img {
+  width: 150px;
+  height: 60px;
+}
+
+a {
+  cursor: pointer;
+}
