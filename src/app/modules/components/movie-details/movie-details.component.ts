@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnChanges, DoCheck, AfterContentInit } from '@angular/core';
 import { Movie } from 'src/app/shared/models';
 import { MoviesService } from 'src/app/core/services';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-movie-details',
@@ -13,18 +13,18 @@ export class MovieDetailsComponent implements OnInit, OnChanges {
  @Input() selectedMovie: Movie;
 
   constructor(private moviesService: MoviesService,
+              private router: Router,
               private route: ActivatedRoute ) { }
 
   ngOnInit() {
-  debugger
-  //   this.router.events.subscribe((evt) => {
-  //     if (!(evt instanceof NavigationEnd)) {
-  //         return;
-  //     }
-  //     window.scrollTo(0, 0)
-  // });
+    this.router.events.subscribe((evt) => {
+      if (!(evt instanceof NavigationEnd)) {
+          return;
+      }
+      window.scrollTo(0, 0);
+    });
 
-  this.route.data.subscribe(movie => {
+    this.route.data.subscribe(movie => {
         this.selectedMovie = movie as Movie;
     });
 
