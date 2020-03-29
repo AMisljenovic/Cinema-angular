@@ -1,0 +1,37 @@
+<app-header></app-header>
+
+<div class="wrapper">
+
+  <div id="wrapper">
+  <!-- [slideShow]="true" -->
+    <jqxScrollView id="scroll-view" #myScrollView [width]="1000" [height]="425">
+      <div class="photo"></div>
+      <div class="photo"></div>
+      <div class="photo"></div>
+      <div class="photo"></div>
+      <div class="photo"></div>
+    </jqxScrollView>
+
+  <h1>
+    Now playing
+  </h1>
+  <div class="all-movies">
+    <img id="0" class="all-movies-poster" (click)="selectMovie($event)" >
+    <img id="1" class="all-movies-poster" (click)="selectMovie($event)" >
+    <img id="2" class="all-movies-poster" (click)="selectMovie($event)" >
+    <img id="3" class="all-movies-poster" (click)="selectMovie($event)" >
+    <img id="4" class="all-movies-poster" (click)="selectMovie($event)" >
+  </div>
+  <h1>
+    Coming soon
+  </h1>
+  <div class="all-movies">
+    <img id="5" class="all-movies-poster-coming">
+    <img id="6" class="all-movies-poster-coming">
+    <img id="7" class="all-movies-poster-coming">
+    <img id="8" class="all-movies-poster-coming">
+    <img id="9" class="all-movies-poster-coming">
+  </div>
+</div>
+
+<app-footer></app-footer>

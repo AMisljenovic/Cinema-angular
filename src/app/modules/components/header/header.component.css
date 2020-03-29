@@ -1,0 +1,14 @@
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+div[role=row] {
+  height: 150px !important;
+}
+
+.navbar {
+  display: inline-flex;
+}
+
+.navbar a {
+  color: white;
+  font-size: 24px;
+}

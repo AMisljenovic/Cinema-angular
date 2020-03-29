@@ -5,17 +5,25 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { jqxScrollViewComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxscrollview';
 import { MovieDetailsComponent } from './modules/components/movie-details/movie-details.component';
+import { AppRoutingModule } from './app-routing.module';
+import { HeaderComponent } from './modules/components/header/header.component';
+import { FooterComponent } from './modules/components/footer/footer.component';
+import { HomeComponent } from './modules/components/home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     jqxScrollViewComponent,
     MovieDetailsComponent,
+    HeaderComponent,
+    FooterComponent,
+    HomeComponent,
    ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    AppRoutingModule,
    ],
   bootstrap: [ AppComponent ]
 })
