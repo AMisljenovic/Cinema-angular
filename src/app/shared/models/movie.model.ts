@@ -3,6 +3,7 @@ export class Movie {
     public year: string;
     public title: string;
     public rated: string;
+    public director: string;
     public released: string;
     public runtime: string;
     public genre: string;
@@ -11,4 +12,5 @@ export class Movie {
     public plot: string;
     public country: string;
     public poster: string;
+    public playing: boolean;
 }

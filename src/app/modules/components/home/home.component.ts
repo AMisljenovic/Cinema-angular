@@ -3,6 +3,7 @@ import { Movie } from 'src/app/shared/models';
 import { jqxScrollViewComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxscrollview';
 import { MoviesService } from 'src/app/core/services';
 import { Router } from '@angular/router';
+import { jqxLoaderComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxloader';
 
 @Component({
   selector: 'app-home',
@@ -11,9 +12,10 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit, AfterViewInit {
   @ViewChild('myScrollView', {static: false}) myScrollView: jqxScrollViewComponent;
+  @ViewChild('jqxLoader', { static: false }) jqxLoader: jqxLoaderComponent;
 
-  movies: Movie[];
-  selectedMovie: Movie;
+  announcedMovies: Movie[];
+  playingMovies: Movie[];
   public source;
   public dataAdapter;
 
@@ -51,11 +53,18 @@ export class HomeComponent implements OnInit, AfterViewInit {
   constructor(private moviesService: MoviesService,
               private router: Router) { }
 
+  ngOnInit(): void {
+
+  }
+
   ngAfterViewInit(): void {
+    this.jqxLoader.open();
+
     this.moviesService.getMovies()
     .subscribe(movies => {
-
-      this.movies = movies;
+      this.jqxLoader.close();
+      this.announcedMovies = movies.filter(movie => movie.playing === false);
+      this.playingMovies = movies.filter(movie => movie.playing === true);
 
       const posters = document.getElementsByClassName('photo');
       for (let index = 0; index < posters.length; index++) {
@@ -65,19 +74,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
       const nowPlayingPosters = document.getElementsByClassName('all-movies-poster');
 
       for (let index = 0; index < nowPlayingPosters.length; index++) {
-        (nowPlayingPosters[index] as HTMLImageElement).src = movies[index].poster;
+        (nowPlayingPosters[index] as HTMLImageElement).src = this.playingMovies[index].poster;
       }
 
       const comingSoonPosters = document.getElementsByClassName('all-movies-poster-coming');
 
       for (let index = 0; index < nowPlayingPosters.length; index++) {
-        (comingSoonPosters[index] as HTMLImageElement).src = movies[index + 2].poster;
+        (comingSoonPosters[index] as HTMLImageElement).src = this.announcedMovies[index].poster;
       }
 
     });
-  }
-
-  ngOnInit(): void {
   }
 
   imagerenderer(row, datafield, value) {
@@ -85,12 +91,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
  }
 
  selectMovie(event: any) {
-  const imageTagId = event.currentTarget.id;
+  const imageTagId = event.currentTarget.id as string;
 
   const route = this.router.config.find(r => r.path === 'movie-details/:id');
-  route.data =  this.movies[imageTagId];
 
-  this.selectedMovie = this.movies[imageTagId];
+  if (imageTagId.includes('playing')) {
+    route.data =  this.playingMovies[imageTagId.split('-')[1]];
+  } else {
+    route.data =  this.announcedMovies[imageTagId.split('-')[1]];
+  }
+
   this.router.navigateByUrl(`movie-details/${imageTagId}`);
  }
 }

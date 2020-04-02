@@ -1,37 +1,39 @@
 <app-header></app-header>
 
-<div class="wrapper">
+<jqxLoader #jqxLoader
+           [imagePosition]="'top'"
+           [width]="150"
+           [height]="90">
+</jqxLoader>
+<div id="wrapper">
+<!-- [slideShow]="true" -->
+  <jqxScrollView id="scroll-view" #myScrollView [width]="1000" [height]="425">
+    <div class="photo"></div>
+    <div class="photo"></div>
+    <div class="photo"></div>
+    <div class="photo"></div>
+    <div class="photo"></div>
+  </jqxScrollView>
 
-  <div id="wrapper">
-  <!-- [slideShow]="true" -->
-    <jqxScrollView id="scroll-view" #myScrollView [width]="1000" [height]="425">
-      <div class="photo"></div>
-      <div class="photo"></div>
-      <div class="photo"></div>
-      <div class="photo"></div>
-      <div class="photo"></div>
-    </jqxScrollView>
-
-  <h1>
-    Now playing
-  </h1>
-  <div class="all-movies">
-    <img id="0" class="all-movies-poster" (click)="selectMovie($event)" >
-    <img id="1" class="all-movies-poster" (click)="selectMovie($event)" >
-    <img id="2" class="all-movies-poster" (click)="selectMovie($event)" >
-    <img id="3" class="all-movies-poster" (click)="selectMovie($event)" >
-    <img id="4" class="all-movies-poster" (click)="selectMovie($event)" >
-  </div>
-  <h1>
-    Coming soon
-  </h1>
-  <div class="all-movies">
-    <img id="5" class="all-movies-poster-coming">
-    <img id="6" class="all-movies-poster-coming">
-    <img id="7" class="all-movies-poster-coming">
-    <img id="8" class="all-movies-poster-coming">
-    <img id="9" class="all-movies-poster-coming">
-  </div>
+<h1>
+  Now playing
+</h1>
+<div class="all-movies">
+  <img id="playing-0" class="all-movies-poster" (click)="selectMovie($event)" >
+  <img id="playing-1" class="all-movies-poster" (click)="selectMovie($event)" >
+  <img id="playing-2" class="all-movies-poster" (click)="selectMovie($event)" >
+  <img id="playing-3" class="all-movies-poster" (click)="selectMovie($event)" >
+  <img id="playing-4" class="all-movies-poster" (click)="selectMovie($event)" >
+</div>
+<h1>
+  Coming soon
+</h1>
+<div class="all-movies">
+  <img id="coming-0" class="all-movies-poster-coming">
+  <img id="coming-1" class="all-movies-poster-coming">
+  <img id="coming-2" class="all-movies-poster-coming">
+  <img id="coming-3" class="all-movies-poster-coming">
+  <img id="coming-4" class="all-movies-poster-coming">
 </div>
 
 <app-footer></app-footer>
