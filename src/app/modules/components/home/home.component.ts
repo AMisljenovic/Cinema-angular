@@ -16,8 +16,17 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   announcedMovies: Movie[];
   playingMovies: Movie[];
+  movies: Movie[];
   public source;
   public dataAdapter;
+
+  movieIds: string[] = [
+    '0fe4656a-4598-4f6f-9e7c-3f9347153a10',
+    '13e6d16d-e8a9-4112-a3d0-fda72a846b17',
+    '164ca3af-4b7f-454f-bd07-9b8d6c3736cc',
+    '1df1dac8-0b73-486e-b1a0-ded9d9d0849c',
+    '251759f9-a3c5-43d3-9734-39a288f2a461'
+  ];
 
   public columns: jqwidgets.GridColumn[] = [
     { text: 'Poster', datafield: 'poster', width: 200, cellsrenderer: this.imagerenderer },
@@ -63,24 +72,25 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.moviesService.getMovies()
     .subscribe(movies => {
       this.jqxLoader.close();
+      this.movies = movies;
       this.announcedMovies = movies.filter(movie => movie.playing === false);
       this.playingMovies = movies.filter(movie => movie.playing === true);
 
       const posters = document.getElementsByClassName('photo');
       for (let index = 0; index < posters.length; index++) {
-        (posters[index] as HTMLElement).style.backgroundImage = `url(${movies[index].poster})`;
+        (posters[index] as HTMLElement).style.backgroundImage = `url(../../../../assets/wide-${this.movieIds[index]}.jpg)`;
       }
 
       const nowPlayingPosters = document.getElementsByClassName('all-movies-poster');
 
       for (let index = 0; index < nowPlayingPosters.length; index++) {
-        (nowPlayingPosters[index] as HTMLImageElement).src = this.playingMovies[index].poster;
+        (nowPlayingPosters[index] as HTMLImageElement).src = `../../../../assets/${this.playingMovies[index].id}.jpg`;
       }
 
       const comingSoonPosters = document.getElementsByClassName('all-movies-poster-coming');
 
       for (let index = 0; index < nowPlayingPosters.length; index++) {
-        (comingSoonPosters[index] as HTMLImageElement).src = this.announcedMovies[index].poster;
+        (comingSoonPosters[index] as HTMLImageElement).src = `../../../../assets/${this.announcedMovies[index].id}.jpg`;
       }
 
     });
@@ -97,8 +107,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   if (imageTagId.includes('playing')) {
     route.data =  this.playingMovies[imageTagId.split('-')[1]];
-  } else {
+  } else if (imageTagId.includes('coming')) {
     route.data =  this.announcedMovies[imageTagId.split('-')[1]];
+  } else {
+    route.data =  this.movies[imageTagId.split('-')[1]];
   }
 
   this.router.navigateByUrl(`movie-details/${imageTagId}`);
