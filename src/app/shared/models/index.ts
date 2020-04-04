@@ -3,3 +3,5 @@ export * from './repertory.model';
 export * from './ticket.model';
 export * from './hall.model';
 export * from './user.model';
+export * from './week-play.model';
+

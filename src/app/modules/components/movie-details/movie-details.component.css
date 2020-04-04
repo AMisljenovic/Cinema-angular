@@ -52,3 +52,29 @@ h1 {
   font-size: 18px;
   font-weight: bold;
 }
+
+.tickets {
+  display: flex;
+  flex-direction: column;
+  margin-right: 3%;
+}
+
+.buy-tickets {
+  align-self: center;
+  color: #FFC700;
+  -webkit-text-stroke-color: black;
+  -webkit-text-stroke-width: thin;
+}
+
+#grid {
+  margin-top: 3%;
+}
+.table {
+  display: flex;
+  flex-direction: row;
+}
+
+ul {
+  margin-right: 5%;
+  margin-top: 6%;
+}

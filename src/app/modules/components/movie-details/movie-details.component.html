@@ -17,6 +17,19 @@
         <h2 class="plot-header">Cast</h2>
         <p class="plot-text">{{selectedMovie.actors}}</p>
       </div>
+      <div class="tickets">
+        <h1 class="buy-tickets">Buy tickets online</h1>
+        <div class="table">
+          <jqxGrid id="grid" #repertoryGrid
+          [source]="dataAdapter" [columns]="columns" [showstatusbar]="true"
+          [columngroups]="columngroups"
+          [autoheight]="true"
+          [editable]="false"
+          [selectionmode]="'singlecell'"
+          (onCellselect)="cellSelected($event)">
+          </jqxGrid>
+        </div>
+      </div>
     </div>
 
 </div>

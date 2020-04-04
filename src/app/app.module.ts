@@ -10,12 +10,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { HeaderComponent } from './modules/components/header/header.component';
 import { FooterComponent } from './modules/components/footer/footer.component';
 import { HomeComponent } from './modules/components/home/home.component';
+import { jqxGridComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxgrid';
 
 @NgModule({
   declarations: [
     AppComponent,
     jqxScrollViewComponent,
     jqxLoaderComponent,
+    jqxGridComponent,
     MovieDetailsComponent,
     HeaderComponent,
     FooterComponent,

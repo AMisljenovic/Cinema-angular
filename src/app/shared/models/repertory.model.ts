@@ -3,5 +3,5 @@ export class Repertory {
   public moveId: string;
   public hallId: string;
   public playTime: string;
-  public day: string;
+  public day: number;
 }
