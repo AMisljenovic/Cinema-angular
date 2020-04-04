@@ -1,17 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { AppComponent } from './app.component';
 import { MovieDetailsComponent } from './modules/components';
 import { HomeComponent } from './modules/components/home/home.component';
 
 const routes: Routes = [
-  // {
-  //   path: '',
-  //   children: [
-  //   ]
-  // },
-  { path: '',  redirectTo: '/home', pathMatch: 'full' },
+  {
+    path: '',
+    redirectTo: 'movie-details/1df1dac8-0b73-486e-b1a0-ded9d9d0849c',
+    pathMatch: 'full'
+  },
   {
     path: 'home',
     component: HomeComponent
@@ -26,7 +24,7 @@ const routes: Routes = [
   declarations: [],
   imports: [
     CommonModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes, {scrollPositionRestoration: 'enabled'})
   ],
   exports: [ RouterModule ]
 })
