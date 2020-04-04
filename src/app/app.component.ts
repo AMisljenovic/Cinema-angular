@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { MoviesService } from './core/services';
+import { MovieService } from './core/services';
 
 @Component({
   selector: 'app-root',
-  providers: [MoviesService],
+  providers: [MovieService],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })

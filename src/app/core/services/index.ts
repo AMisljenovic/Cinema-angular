@@ -1,1 +1,6 @@
-export * from './movies-service/movies.service';
+export * from './movie-service/movie.service';
+export * from './hall-service/hall-service.service';
+export * from './repertory-service/repertory-service.service';
+export * from './ticket-service/ticket-service.service';
+export * from './user-service/user-service.service';
+

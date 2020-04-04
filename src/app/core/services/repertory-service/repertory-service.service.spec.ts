@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { MoviesService } from './movies.service';
+import { RepertoryService } from './repertory-service.service';
 
-describe('MoviesService', () => {
+describe('RepertoryServiceService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: MoviesService = TestBed.get(MoviesService);
+    const service: RepertoryService = TestBed.get(RepertoryService);
     expect(service).toBeTruthy();
   });
 });
