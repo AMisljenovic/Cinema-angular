@@ -2,3 +2,23 @@
   display: flex;
   flex-direction: column;
 }
+
+jqxGrid {
+  align-self: center;
+  margin-top: 10%;
+}
+
+img:hover {
+  opacity: 0.8;
+}
+
+img {
+  align-self: center;
+  margin-top: 5px;
+}
+
+.seat {
+  margin-left: 3px;
+  height:  60px;
+  width: 60px;
+}

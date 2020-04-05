@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, DoCheck, AfterContentInit, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, DoCheck, AfterContentInit, ViewChild, AfterViewInit, ElementRef, AfterViewChecked } from '@angular/core';
 import { Movie, Repertory, WeekPlay } from 'src/app/shared/models';
 import { MovieService, RepertoryService } from 'src/app/core/services';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -11,7 +11,7 @@ import { jqxButtonComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbu
   templateUrl: './movie-details.component.html',
   styleUrls: ['./movie-details.component.css']
 })
-export class MovieDetailsComponent implements OnInit {
+export class MovieDetailsComponent implements OnInit, AfterViewChecked {
   @ViewChild('jqxLoader', { static: false }) jqxLoader: jqxLoaderComponent;
   @ViewChild('repertoryGrid', {static: false}) jqxGrid: jqxGridComponent;
   @ViewChild('jqxButton', { static: false }) jqxButton: jqxButtonComponent;
@@ -61,6 +61,11 @@ export class MovieDetailsComponent implements OnInit {
           this.repertoryDataGrid(repertoires);
         });
       });
+  }
+
+  ngAfterViewChecked() {
+    const pager = document.getElementsByClassName('jqx-clear jqx-position-absolute jqx-grid-statusbar jqx-widget-header')[0] as HTMLElement;
+    pager.style.backgroundColor = '#c9c9c9';
   }
 
   repertoryDataGrid(repertoires: Repertory[]) {

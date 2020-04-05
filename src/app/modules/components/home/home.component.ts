@@ -48,20 +48,21 @@ export class HomeComponent implements OnInit, AfterViewInit {
 //         slideShow: false,
 //     };
 
-//   gridSettings: jqwidgets.GridOptions =
-//     {
-//       theme: 'material-purple',
-//       width: '800',
-//       source: this.dataAdapter,
-//       columns: this.columns,
-//       pageable: true,
-//       sortable: true,
-//       editable: true,
-//       autoheight: true,
-//       autorowheight: true,
-//       altrows: true,
-//       enabletooltips: true
-//     };
+  // gridSettings: jqwidgets.GridOptions =
+  //   {
+  //     theme: 'material-purple',
+  //     width: '800',
+  //     source: this.dataAdapter,
+  //     columns: this.columns,
+  //     pageable: true,
+  //     sortable: true,
+  //     editable: true,
+  //     autoheight: true,
+  //     autorowheight: true,
+  //     altrows: true,
+  //     enabletooltips: true,
+
+  //   };
 
   constructor(private movieService: MovieService,
               private router: Router) { }

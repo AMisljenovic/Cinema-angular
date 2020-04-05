@@ -19,7 +19,7 @@
       </div>
       <div class="tickets" *ngIf="isMoviePlaying">
         <h1 class="buy-tickets">Buy tickets online</h1>
-        <jqxGrid #repertoryGrid
+        <jqxGrid #repertoryGrid id="jqx-grid"
         [source]="dataAdapter" [columns]="columns" [showstatusbar]="true"
         [columngroups]="columngroups"
         [autoheight]="true"
