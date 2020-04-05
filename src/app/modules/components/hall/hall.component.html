@@ -1,0 +1,13 @@
+<app-header></app-header>
+<div id="wrapper">
+  <jqxGrid #repertoryGrid
+        [source]="dataAdapter" [columns]="columns" [showstatusbar]="true"
+        [columngroups]="columngroups"
+        [autoheight]="true"
+        [editable]="false"
+        [selectionmode]="'multiplecells'"
+        [showheader]="false"
+        (onCellselect)="cellSelected($event)">
+  </jqxGrid>
+</div>
+<app-footer></app-footer>

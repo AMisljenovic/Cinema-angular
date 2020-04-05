@@ -1,9 +1,10 @@
 import { Component, OnInit, Input, OnChanges, DoCheck, AfterContentInit, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
 import { Movie, Repertory, WeekPlay } from 'src/app/shared/models';
 import { MovieService, RepertoryService } from 'src/app/core/services';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { jqxLoaderComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxloader';
 import { jqxGridComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxgrid';
+import { jqxButtonComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbuttons';
 
 @Component({
   selector: 'app-movie-details',
@@ -13,9 +14,13 @@ import { jqxGridComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxgrid
 export class MovieDetailsComponent implements OnInit {
   @ViewChild('jqxLoader', { static: false }) jqxLoader: jqxLoaderComponent;
   @ViewChild('repertoryGrid', {static: false}) jqxGrid: jqxGridComponent;
+  @ViewChild('jqxButton', { static: false }) jqxButton: jqxButtonComponent;
   selectedMovie: Movie;
   repertoires: Repertory[];
-  private movieId = 'id';
+  private movieIdParamName = 'id';
+  playTime: string;
+  day: number;
+  isMoviePlaying: boolean;
 
   source: any = [
     {
@@ -39,21 +44,17 @@ export class MovieDetailsComponent implements OnInit {
     { text: 'Thrid play', datafield: 'thirdPlay'},
   ];
 
-  //   imagerenderer(row, datafield, value) {
-  //     return '<img style="margin-left: 5px;" height="200" width="200" src="' + value + '"/>';
-  //  }
-
-
   constructor(private router: Router,
               private route: ActivatedRoute,
               private movieService: MovieService,
               private repertoryService: RepertoryService ) { }
 
   ngOnInit() {
-    const id = this.route.snapshot.params[this.movieId];
+    const id = this.route.snapshot.params[this.movieIdParamName];
     this.movieService.getMovie(id)
       .subscribe(movie => {
         this.selectedMovie = movie;
+        this.isMoviePlaying = movie.playing;
         this.repertoryService.getRepertoiresByMoveId(movie.id)
         .subscribe(repertoires => {
           this.repertoires = repertoires;
@@ -103,10 +104,20 @@ export class MovieDetailsComponent implements OnInit {
   }
 
   cellSelected(event: any, value: any) {
-    const playTime = this.jqxGrid.getcelltext(event.args.rowindex, event.args.datafield);
+    if (event.args.datafield === 'day') {
+      this.jqxGrid.unselectcell(event.args.rowindex, event.args.datafield);
+      this.day = null;
+      this.playTime = null;
+      return;
+    }
+
+    this.day = event.args.rowindex;
+    this.playTime = this.jqxGrid.getcelltext(event.args.rowindex, event.args.datafield);
   }
-// TODO(AM)
-// vreme izuvceno iz tabele, treba dodati dugme za prosledjivanje na sledecu stranicu, parametri: vreme, dan, movieId
-// repertoare vec sve imas douvcene samo ga nadji po vremenu i danu prikazivanja
-// u eventu imas red koji predstavalja dan i njegov indeks ce biti iskoristen
+
+  seatsSelect() {
+    const repertory = this.repertoires.find(rep => rep.playTime === this.playTime && rep.day === (this.day + 1));
+
+    this.router.navigateByUrl(`hall/${repertory.hallId}/${repertory.id}`);
+  }
 }

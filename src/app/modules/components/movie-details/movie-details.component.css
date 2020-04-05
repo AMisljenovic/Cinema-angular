@@ -66,15 +66,12 @@ h1 {
   -webkit-text-stroke-width: thin;
 }
 
-#grid {
+jqxGrid {
   margin-top: 3%;
 }
-.table {
-  display: flex;
-  flex-direction: row;
-}
 
-ul {
-  margin-right: 5%;
-  margin-top: 6%;
+jqxButton {
+  align-self: center;
+  margin-top: 5%;
+  cursor: pointer;
 }

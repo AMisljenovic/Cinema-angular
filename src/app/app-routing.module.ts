@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MovieDetailsComponent } from './modules/components';
 import { HomeComponent } from './modules/components/home/home.component';
+import { HallComponent } from './modules/components/hall/hall.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,10 @@ const routes: Routes = [
   {
     path: 'movie-details/:id',
     component: MovieDetailsComponent
+  },
+  {
+    path: 'hall/:hallId/:repertoryId',
+    component: HallComponent
   }
 ];
 

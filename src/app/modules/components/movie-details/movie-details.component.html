@@ -17,18 +17,27 @@
         <h2 class="plot-header">Cast</h2>
         <p class="plot-text">{{selectedMovie.actors}}</p>
       </div>
-      <div class="tickets">
+      <div class="tickets" *ngIf="isMoviePlaying">
         <h1 class="buy-tickets">Buy tickets online</h1>
-        <div class="table">
-          <jqxGrid id="grid" #repertoryGrid
-          [source]="dataAdapter" [columns]="columns" [showstatusbar]="true"
-          [columngroups]="columngroups"
-          [autoheight]="true"
-          [editable]="false"
-          [selectionmode]="'singlecell'"
-          (onCellselect)="cellSelected($event)">
-          </jqxGrid>
-        </div>
+        <jqxGrid #repertoryGrid
+        [source]="dataAdapter" [columns]="columns" [showstatusbar]="true"
+        [columngroups]="columngroups"
+        [autoheight]="true"
+        [editable]="false"
+        [selectionmode]="'singlecell'"
+        [showheader]="false"
+        (onCellselect)="cellSelected($event)">
+        </jqxGrid>
+        <jqxButton #jqxButton [disabled]="!(day && playTime)"
+        [roundedCorners]="'all'"
+        [width]='200'
+        [height]='40'
+        (onClick)="seatsSelect()">
+          Click here to select seats
+        </jqxButton>
+      </div>
+      <div class="tickets" *ngIf="!isMoviePlaying">
+        <h1>Coming soon</h1>
       </div>
     </div>
 

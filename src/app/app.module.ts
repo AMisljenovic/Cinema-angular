@@ -11,6 +11,8 @@ import { HeaderComponent } from './modules/components/header/header.component';
 import { FooterComponent } from './modules/components/footer/footer.component';
 import { HomeComponent } from './modules/components/home/home.component';
 import { jqxGridComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxgrid';
+import { jqxButtonComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbuttons';
+import { HallComponent } from './modules/components/hall/hall.component';
 
 @NgModule({
   declarations: [
@@ -18,10 +20,12 @@ import { jqxGridComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxgrid
     jqxScrollViewComponent,
     jqxLoaderComponent,
     jqxGridComponent,
+    jqxButtonComponent,
     MovieDetailsComponent,
     HeaderComponent,
     FooterComponent,
     HomeComponent,
+    HallComponent,
    ],
   imports: [
     BrowserModule,
