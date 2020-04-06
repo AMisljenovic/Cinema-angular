@@ -4,4 +4,5 @@ export * from './ticket.model';
 export * from './hall.model';
 export * from './user.model';
 export * from './week-play.model';
+export * from './seat-position.model';
 

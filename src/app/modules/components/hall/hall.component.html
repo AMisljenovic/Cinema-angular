@@ -1,12 +1,26 @@
 <app-header></app-header>
-<div id="wrapper">
+<div class="wrapper">
+  <div class="legend">
+    <div class="legend-items">
+      <div class="wrapper legend-available">
+        <h3>Available</h3>
+      </div>
+      <div class="wrapper legend-reserved">
+        <h3>Reserved</h3>
+      </div>
+      <div class="wrapper legend-reserved-by-you">
+        <h3>Resereved by you</h3>
+      </div>
+    </div>
+  </div>
   <jqxGrid #repertoryGrid id="jqx-grid"
         [source]="dataAdapter" [columns]="columns" [showstatusbar]="true" [rowsheight]="110"
         [autoheight]="true"
         [editable]="false"
         [selectionmode]="'multiplecells'"
         [showheader]="false"
-        (onCellselect)="cellSelected($event)">
+        (onCellselect)="cellSelected($event)"
+        (onCellunselect)="cellUnselected($event)">
   </jqxGrid>
 
 </div>

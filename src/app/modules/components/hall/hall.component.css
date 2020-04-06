@@ -1,11 +1,29 @@
-#wrapper {
+.wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.legend {
   display: flex;
   flex-direction: column;
+  margin-top: 10%;
+  margin-left: 15%;
+}
+
+.legend-items {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10%;
+  margin-left: 15%;
+  border-color: black;
+  border-style: solid;
 }
 
 jqxGrid {
   align-self: center;
   margin-top: 10%;
+  margin-left: 20%;
 }
 
 img:hover {
@@ -17,8 +35,19 @@ img {
   margin-top: 5px;
 }
 
-.seat {
-  margin-left: 3px;
-  height:  60px;
-  width: 60px;
+h3 {
+  align-self: center;
 }
+
+.legend-available {
+  background-color: white;
+}
+
+.legend-reserved {
+  background-color: #FFC700;
+}
+
+.legend-reserved-by-you {
+  background-color: dodgerblue;
+}
+

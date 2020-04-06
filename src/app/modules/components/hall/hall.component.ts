@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, AfterViewInit, AfterViewChecked } from '@
 import { Router, ActivatedRoute } from '@angular/router';
 import { HallService, TicketService } from 'src/app/core/services';
 import { jqxGridComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxgrid';
-import { Ticket, Hall } from 'src/app/shared/models';
+import { Ticket, Hall, SeatPosition } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-hall',
@@ -11,12 +11,15 @@ import { Ticket, Hall } from 'src/app/shared/models';
 })
 export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
   @ViewChild('repertoryGrid', {static: false}) jqxGrid: jqxGridComponent;
-  private seatImageUrl = '../../../../assets/seat.jpg';
+  private seatImageUrl = '../../../../assets/seat.png';
   private repertoryIdParamName = 'repertoryId';
   private hallIdParamName = 'hallId';
+  private jqxGridPagerDisabled = false;
+  private cellsRendered = true;
   columnPropNames: string[] = [];
-
+  seats: number[];
   dataAdapter: any;
+  seatPosition: SeatPosition[] = [];
 
   source: any = [
     {
@@ -34,7 +37,7 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
   ];
 
   imagerenderer(row, datafield, value) {
-    return '<img style="margin-top: 20%;margin-left: 25%" height="60" width="70" src="' + value + '"/>';
+    return `<img id="${row}-${datafield}" style="margin-top: 20%;margin-left: 22%" height="60" width="70" src="${value}"/>`;
  }
 
 
@@ -56,9 +59,10 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
     const hallId = this.route.snapshot.params[this.hallIdParamName];
 
     this.ticketService.getByRepertoryid(repertoryId)
-    .subscribe(tickets => {
+    .subscribe(seats => {
       this.hallService.get(hallId).subscribe(hall => {
-        this.hallrender(tickets, hall);
+        this.seats = seats;
+        this.hallrender(hall);
       });
     });
   }
@@ -72,20 +76,35 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
   }
 
   ngAfterViewChecked() {
-    const elements = Array.from(document.getElementsByClassName('jqx-grid-cell jqx-item'));
-    elements.forEach(element => {
-      const converted = element as HTMLElement;
-      converted.style.border = 'none';
-    });
+    if (!this.jqxGridPagerDisabled) {
+      const elements = Array.from(document.getElementsByClassName('jqx-grid-cell jqx-item'));
+      elements.forEach(element => {
+        const converted = element as HTMLElement;
+        converted.style.border = 'none';
+      });
 
-    const pager = document.getElementsByClassName('jqx-clear jqx-position-absolute jqx-grid-statusbar jqx-widget-header')[0] as HTMLElement;
-    pager.style.backgroundColor = '#c9c9c9';
+      const pager = document.getElementsByClassName('jqx-clear jqx-position-absolute jqx-grid-statusbar jqx-widget-header')[0] as HTMLElement;
+      pager.style.backgroundColor = '#c9c9c9';
 
-    const jqxGridDiv = document.getElementsByClassName('jqx-grid jqx-reset jqx-rc-all jqx-widget jqx-widget-content')[0] as HTMLElement;
-    jqxGridDiv.style.border = 'black';
+      const jqxGridDiv = document.getElementsByClassName('jqx-grid jqx-reset jqx-rc-all jqx-widget jqx-widget-content')[0] as HTMLElement;
+      jqxGridDiv.style.border = 'black';
+    }
+
+    if (this.seats && this.cellsRendered) {
+      for (let i = 0; i < 5; i++) {
+        for (let y = 0; y < 5; y++) {
+          if (this.seats[i][y] === 1) {
+            const cell = document.getElementById(`${i}-column${y}`) as HTMLElement;
+            cell.parentElement.style.backgroundColor = '#FFC700';
+          }
+        }
+      }
+
+      this.cellsRendered = false;
+    }
   }
 
-  hallrender(tickets: Ticket[], hall: Hall) {
+  hallrender(hall: Hall) {
     for (let index = 0; index < hall.columns; index++) {
       const columnPropName = `column${index}`;
       this.columnPropNames.push(columnPropName);
@@ -109,7 +128,28 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
   }
 
   cellSelected(event: any) {
-    debugger
+    const seatRow = +event.args.rowindex;
+    const seatColumn = +event.args.datafield.split('column')[1];
+
+    if (this.seats[seatRow][seatColumn] === 1) {
+      this.jqxGrid.unselectcell(event.args.rowindex, event.args.datafield);
+      return;
+    }
+    this.seatPosition.push({row: seatRow, column: seatColumn});
+
     //(TODO: AM): legenda za boje, takodje obojiti i blokirati zauzeta mesta
+  }
+
+  cellUnselected(event: any) {
+    const seatRow = +event.args.rowindex;
+    const seatColumn = +event.args.datafield.split('column')[1];
+
+    const index = this.seatPosition.findIndex(seat => {
+      return seat.row === seatRow && seat.column === seatColumn;
+    });
+
+    if (index > -1) {
+      this.seatPosition.splice(index, 1);
+    }
   }
 }

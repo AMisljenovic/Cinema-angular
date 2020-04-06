@@ -15,9 +15,9 @@ export class TicketService {
     this.url = `${environment.apiUrl}/tickets`;
   }
 
-  getByRepertoryid(repertoryId: string): Observable<Ticket[]> {
+  getByRepertoryid(repertoryId: string): Observable<number[]> {
     const url = `${this.url}/${repertoryId}`;
 
-    return this.http.get<Ticket[]>(url);
+    return this.http.get<number[]>(url);
   }
 }
