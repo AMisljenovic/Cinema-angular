@@ -15,12 +15,13 @@ export class MovieDetailsComponent implements OnInit, AfterViewChecked {
   @ViewChild('jqxLoader', { static: false }) jqxLoader: jqxLoaderComponent;
   @ViewChild('repertoryGrid', {static: false}) jqxGrid: jqxGridComponent;
   @ViewChild('jqxButton', { static: false }) jqxButton: jqxButtonComponent;
-  selectedMovie: Movie;
-  repertoires: Repertory[];
   private movieIdParamName = 'id';
+  private jqxGridPagerDisabled = false;
   playTime: string;
   day: number;
   isMoviePlaying: boolean;
+  selectedMovie: Movie;
+  repertoires: Repertory[];
 
   source: any = [
     {
@@ -64,8 +65,12 @@ export class MovieDetailsComponent implements OnInit, AfterViewChecked {
   }
 
   ngAfterViewChecked() {
-    const pager = document.getElementsByClassName('jqx-clear jqx-position-absolute jqx-grid-statusbar jqx-widget-header')[0] as HTMLElement;
-    pager.style.backgroundColor = '#c9c9c9';
+    if (!this.jqxGridPagerDisabled) {
+      // tslint:disable-next-line: max-line-length
+      const pager = document.getElementsByClassName('jqx-clear jqx-position-absolute jqx-grid-statusbar jqx-widget-header')[0] as HTMLElement;
+      pager.style.backgroundColor = '#c9c9c9';
+      this.jqxGridPagerDisabled = true;
+    }
   }
 
   repertoryDataGrid(repertoires: Repertory[]) {

@@ -18,8 +18,10 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
   private cellsRendered = true;
   columnPropNames: string[] = [];
   seats: number[];
+  userReservations: number[];
   dataAdapter: any;
   seatPosition: SeatPosition[] = [];
+  hall = new Hall();
   private pagerHeight: number;
   private jqxGridHeight: number;
   private jqxGridDiv: HTMLElement;
@@ -61,13 +63,19 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
     const repertoryId = this.route.snapshot.params[this.repertoryIdParamName];
     const hallId = this.route.snapshot.params[this.hallIdParamName];
 
-    this.ticketService.getByRepertoryid(repertoryId)
+    this.ticketService.getByRepertoryId(repertoryId)
     .subscribe(seats => {
       this.hallService.get(hallId).subscribe(hall => {
         this.seats = seats;
+        this.hall = hall;
         this.hallrender(hall);
       });
     });
+
+    this.ticketService.getByRepertoryAndUserId(repertoryId).subscribe(seats => {
+      this.userReservations = seats;
+    });
+
   }
 
   ngAfterViewInit() {
@@ -81,8 +89,8 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
         converted.style.border = 'none';
       });
 
+      // tslint:disable-next-line: max-line-length
       const pager = document.getElementsByClassName('jqx-clear jqx-position-absolute jqx-grid-statusbar jqx-widget-header')[0] as HTMLElement;
-      pager.style.backgroundColor = '#c9c9c9';
       this.pagerHeight = +pager.style.height.split('px')[0];
 
       this.jqxGridDiv = document.getElementsByClassName('jqx-grid jqx-reset jqx-rc-all jqx-widget jqx-widget-content')[0] as HTMLElement;
@@ -90,10 +98,13 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
       this.jqxGridHeight =  +this.jqxGridDiv.style.height.split('px')[0];
     }
 
-    if (this.seats && this.cellsRendered) {
+    if (this.seats && this.userReservations && this.cellsRendered) {
       for (let i = 0; i < 5; i++) {
         for (let y = 0; y < 5; y++) {
-          if (this.seats[i][y] === 1) {
+          if (this.userReservations[i][y] === 1) {
+            const cell = document.getElementById(`${i}-column${y}`) as HTMLElement;
+            cell.parentElement.style.backgroundColor = 'dodgerblue';
+          } else if (this.seats[i][y] === 1) {
             const cell = document.getElementById(`${i}-column${y}`) as HTMLElement;
             cell.parentElement.style.backgroundColor = '#FFC700';
           }
@@ -134,13 +145,14 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
     const seatRow = +event.args.rowindex;
     const seatColumn = +event.args.datafield.split('column')[1];
 
-    if (this.seats[seatRow][seatColumn] === 1) {
+    if (this.seats[seatRow][seatColumn] === 1 || this.userReservations[seatRow][seatColumn] === 1) {
       this.jqxGrid.unselectcell(event.args.rowindex, event.args.datafield);
       return;
     }
     this.seatPosition.push({row: seatRow, column: seatColumn});
 
-    //(TODO: AM): legenda za boje, takodje obojiti i blokirati zauzeta mesta
+    //(TODO: AM): nova stranica za prikaz odabranih karata za kupovinu
+    // KARTE treba da imaju cenu
   }
 
   cellUnselected(event: any) {

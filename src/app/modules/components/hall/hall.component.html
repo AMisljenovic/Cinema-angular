@@ -1,6 +1,7 @@
 <app-header></app-header>
 <div class="wrapper">
   <div class="legend">
+    <h1>Hall {{hall.name}}</h1>
     <div class="legend-items">
       <div class="wrapper legend-available">
         <h3>Available</h3>
@@ -13,15 +14,17 @@
       </div>
     </div>
   </div>
-  <jqxGrid #repertoryGrid id="jqx-grid"
-        [source]="dataAdapter" [columns]="columns" [showstatusbar]="true" [rowsheight]="110"
-        [autoheight]="true"
-        [editable]="false"
-        [selectionmode]="'multiplecells'"
-        [showheader]="false"
-        (onCellselect)="cellSelected($event)"
-        (onCellunselect)="cellUnselected($event)">
-  </jqxGrid>
-
+  <div class="hall">
+    <img class="projector" src="../../../../assets/project-screen.png" alt="">
+    <jqxGrid #repertoryGrid id="jqx-grid"
+      [source]="dataAdapter" [columns]="columns" [showstatusbar]="true" [rowsheight]="110"
+      [autoheight]="true"
+      [editable]="false"
+      [selectionmode]="'multiplecells'"
+      [showheader]="false"
+      (onCellselect)="cellSelected($event)"
+      (onCellunselect)="cellUnselected($event)">
+    </jqxGrid>
+  </div>
 </div>
 <app-footer></app-footer>
