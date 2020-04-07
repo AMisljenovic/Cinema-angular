@@ -108,7 +108,7 @@ export class MovieDetailsComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  cellSelected(event: any, value: any) {
+  cellSelected(event: any) {
     if (event.args.datafield === 'day') {
       this.jqxGrid.unselectcell(event.args.rowindex, event.args.datafield);
       this.day = null;

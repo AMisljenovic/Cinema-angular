@@ -20,6 +20,9 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
   seats: number[];
   dataAdapter: any;
   seatPosition: SeatPosition[] = [];
+  private pagerHeight: number;
+  private jqxGridHeight: number;
+  private jqxGridDiv: HTMLElement;
 
   source: any = [
     {
@@ -85,9 +88,11 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
       const pager = document.getElementsByClassName('jqx-clear jqx-position-absolute jqx-grid-statusbar jqx-widget-header')[0] as HTMLElement;
       pager.style.backgroundColor = '#c9c9c9';
+      this.pagerHeight = +pager.style.height.split('px')[0];
 
-      const jqxGridDiv = document.getElementsByClassName('jqx-grid jqx-reset jqx-rc-all jqx-widget jqx-widget-content')[0] as HTMLElement;
-      jqxGridDiv.style.border = 'black';
+      this.jqxGridDiv = document.getElementsByClassName('jqx-grid jqx-reset jqx-rc-all jqx-widget jqx-widget-content')[0] as HTMLElement;
+      this.jqxGridDiv.style.border = 'black';
+      this.jqxGridHeight =  +this.jqxGridDiv.style.height.split('px')[0];
     }
 
     if (this.seats && this.cellsRendered) {
@@ -99,6 +104,9 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
           }
         }
       }
+
+      this.jqxGridDiv = document.getElementsByClassName('jqx-grid jqx-reset jqx-rc-all jqx-widget jqx-widget-content')[0] as HTMLElement;
+      this.jqxGridDiv.style.height = `${this.jqxGridHeight - this.pagerHeight - 2}px`;
 
       this.cellsRendered = false;
     }

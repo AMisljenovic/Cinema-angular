@@ -28,7 +28,7 @@
         [showheader]="false"
         (onCellselect)="cellSelected($event)">
         </jqxGrid>
-        <jqxButton #jqxButton [disabled]="!(day && playTime)"
+        <jqxButton #jqxButton [disabled]="!playTime"
         [roundedCorners]="'all'"
         [width]='200'
         [height]='40'
