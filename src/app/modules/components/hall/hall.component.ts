@@ -71,11 +71,6 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
   }
 
   ngAfterViewInit() {
-    // const elements = Array.from(document.getElementsByClassName('jqx-grid-cell jqx-item test-class'));
-    // elements.forEach(element => {
-    //   const converted = element as HTMLElement;
-    //   converted.style.border = 'none';
-    // });
   }
 
   ngAfterViewChecked() {
