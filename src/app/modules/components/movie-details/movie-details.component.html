@@ -18,7 +18,7 @@
         <p class="plot-text">{{selectedMovie.actors}}</p>
       </div>
       <div class="tickets" *ngIf="isMoviePlaying">
-        <h1 class="buy-tickets">Buy tickets online</h1>
+        <h1 class="buy-tickets">Reserve tickets online</h1>
         <jqxGrid #repertoryGrid id="jqx-grid"
         [source]="dataAdapter" [columns]="columns" [showstatusbar]="true"
         [columngroups]="columngroups"
@@ -29,6 +29,7 @@
         (onCellselect)="cellSelected($event)">
         </jqxGrid>
         <jqxButton #jqxButton [disabled]="!playTime"
+        [template]="'inverse'"
         [roundedCorners]="'all'"
         [width]='200'
         [height]='40'

@@ -27,6 +27,11 @@ jqxGrid {
   padding-bottom: 2%;
 }
 
+jqxButton {
+  margin-top: 150%;
+}
+
+
 img:hover {
   opacity: 0.8;
 }

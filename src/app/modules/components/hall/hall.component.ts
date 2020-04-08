@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { HallService, TicketService } from 'src/app/core/services';
+import { HallService, TicketService, UserService } from 'src/app/core/services';
 import { jqxGridComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxgrid';
 import { Ticket, Hall, SeatPosition } from 'src/app/shared/models';
+import { jqxButtonComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbuttons';
 
 @Component({
   selector: 'app-hall',
@@ -11,6 +12,7 @@ import { Ticket, Hall, SeatPosition } from 'src/app/shared/models';
 })
 export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
   @ViewChild('repertoryGrid', {static: false}) jqxGrid: jqxGridComponent;
+  @ViewChild('jqxButton', { static: false }) jqxButton: jqxButtonComponent;
   private seatImageUrl = '../../../../assets/seat.png';
   private repertoryIdParamName = 'repertoryId';
   private hallIdParamName = 'hallId';
@@ -57,7 +59,8 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
   constructor(private route: ActivatedRoute,
               private hallService: HallService,
-              private ticketService: TicketService) { }
+              private ticketService: TicketService,
+              private userService: UserService) { }
 
   ngOnInit() {
     const repertoryId = this.route.snapshot.params[this.repertoryIdParamName];
@@ -79,6 +82,7 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
   }
 
   ngAfterViewInit() {
+    // this.jqxButton.attrTheme
   }
 
   ngAfterViewChecked() {
@@ -150,9 +154,6 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
       return;
     }
     this.seatPosition.push({row: seatRow, column: seatColumn});
-
-    //(TODO: AM): nova stranica za prikaz odabranih karata za kupovinu
-    // KARTE treba da imaju cenu
   }
 
   cellUnselected(event: any) {
@@ -166,5 +167,12 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
     if (index > -1) {
       this.seatPosition.splice(index, 1);
     }
+  }
+
+  reserveSeats() {
+    this.userService.Login()
+    .subscribe(resp => {
+      debugger
+    });
   }
 }
