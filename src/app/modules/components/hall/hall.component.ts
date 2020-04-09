@@ -4,6 +4,8 @@ import { HallService, TicketService, UserService } from 'src/app/core/services';
 import { jqxGridComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxgrid';
 import { Ticket, Hall, SeatPosition } from 'src/app/shared/models';
 import { jqxButtonComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbuttons';
+import { catchError, map } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-hall',
@@ -170,9 +172,15 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
   }
 
   reserveSeats() {
-    this.userService.Login()
-    .subscribe(resp => {
-      debugger
-    });
+    // login part
+    // this.userService.Login()
+    // .pipe(
+    //   catchError(err => {
+    //     return of(err);
+    //   })
+    // )
+    // .subscribe(_ => {
+    // });
+
   }
 }

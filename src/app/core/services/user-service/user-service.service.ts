@@ -15,12 +15,8 @@ export class UserService {
     this.url = `${environment.apiUrl}/users`;
   }
 
-  Login(username: string = 'user', password: string = 'cinemauser'): any {
+  Login(username: string = 'user', password: string = 'cinemauser'): Observable<any> {
     const url = `${this.url}/login`;
-    // {withCredentials: true}, {}
-    return this.http.post(url, {username, password})
-    .pipe(map(res => {console.log(res)}));
-
-    // sredi da mozes dobiti cookie u pretrazivacu
+    return this.http.post(url, {username, password}, {withCredentials: true});
   }
 }
