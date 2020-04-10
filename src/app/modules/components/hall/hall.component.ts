@@ -6,6 +6,8 @@ import { Ticket, Hall, SeatPosition } from 'src/app/shared/models';
 import { jqxButtonComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbuttons';
 import { catchError, map } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'app-hall',
@@ -62,13 +64,21 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
   constructor(private route: ActivatedRoute,
               private hallService: HallService,
               private ticketService: TicketService,
-              private userService: UserService) { }
+              private userService: UserService,
+              public matDialog: MatDialog) { }
 
   ngOnInit() {
     const repertoryId = this.route.snapshot.params[this.repertoryIdParamName];
     const hallId = this.route.snapshot.params[this.hallIdParamName];
 
     this.ticketService.getByRepertoryId(repertoryId)
+    .pipe
+    (
+      catchError(err => {
+        // TODO(AM): add mechanism for relogin
+        return of(err);
+      })
+    )
     .subscribe(seats => {
       this.hallService.get(hallId).subscribe(hall => {
         this.seats = seats;
@@ -77,14 +87,21 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
       });
     });
 
-    this.ticketService.getByRepertoryAndUserId(repertoryId).subscribe(seats => {
+    this.ticketService.getByRepertoryAndUserId(repertoryId)
+    .pipe
+    (
+      catchError(err => {
+        // TODO(AM): add mechanism for relogin
+        return of(err);
+      })
+    )
+    .subscribe(seats => {
       this.userReservations = seats;
     });
 
   }
 
   ngAfterViewInit() {
-    // this.jqxButton.attrTheme
   }
 
   ngAfterViewChecked() {
@@ -174,13 +191,25 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
   reserveSeats() {
     // login part
     // this.userService.Login()
-    // .pipe(
+    // .pipe
+    // (
     //   catchError(err => {
+    //     // TODO(AM): add mechanism for relogin
     //     return of(err);
     //   })
     // )
     // .subscribe(_ => {
     // });
+  }
 
+  openModal() {
+    const dialogConfig = new MatDialogConfig();
+    // The user can't close the dialog by clicking outside its body
+    dialogConfig.disableClose = true;
+    dialogConfig.id = 'modal-component';
+    dialogConfig.height = '350px';
+    dialogConfig.width = '600px';
+    // https://material.angular.io/components/dialog/overview
+    const modalDialog = this.matDialog.open(ModalComponent, dialogConfig);
   }
 }

@@ -85,13 +85,13 @@ export class MovieDetailsComponent implements OnInit, AfterViewChecked {
 
     repertoires.forEach(rep => {
       switch (rep.day) {
-        case 1: monday[this.timeOfPlay(rep.playTime)] = rep.playTime; break;
-        case 2: tuesday[this.timeOfPlay(rep.playTime)] = rep.playTime; break;
-        case 3: wednesday[this.timeOfPlay(rep.playTime)] = rep.playTime; break;
-        case 4: thursday[this.timeOfPlay(rep.playTime)] = rep.playTime; break;
-        case 5: friday[this.timeOfPlay(rep.playTime)] = rep.playTime; break;
-        case 6: saturday[this.timeOfPlay(rep.playTime)] = rep.playTime; break;
-        case 7: sunday[this.timeOfPlay(rep.playTime)] = rep.playTime; break;
+        case 1: monday[this.timeOfPlay(rep.playTime)] = `${rep.playTime} - ${rep.price} din.`; break;
+        case 2: tuesday[this.timeOfPlay(rep.playTime)] = `${rep.playTime} - ${rep.price} din.`; break;
+        case 3: wednesday[this.timeOfPlay(rep.playTime)] = `${rep.playTime} - ${rep.price} din.`; break;
+        case 4: thursday[this.timeOfPlay(rep.playTime)] = `${rep.playTime} - ${rep.price} din.`; break;
+        case 5: friday[this.timeOfPlay(rep.playTime)] = `${rep.playTime} - ${rep.price} din.`; break;
+        case 6: saturday[this.timeOfPlay(rep.playTime)] = `${rep.playTime} - ${rep.price} din.`; break;
+        case 7: sunday[this.timeOfPlay(rep.playTime)] = `${rep.playTime} - ${rep.price} din.`; break;
         default:
           break;
       }
@@ -122,7 +122,7 @@ export class MovieDetailsComponent implements OnInit, AfterViewChecked {
     }
 
     this.day = event.args.rowindex;
-    this.playTime = this.jqxGrid.getcelltext(event.args.rowindex, event.args.datafield);
+    this.playTime = this.jqxGrid.getcelltext(event.args.rowindex, event.args.datafield).split(' ')[0];
   }
 
   seatsSelect() {

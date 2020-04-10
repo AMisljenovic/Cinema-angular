@@ -8,7 +8,7 @@ import { HallComponent } from './modules/components/hall/hall.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'movie-details/1df1dac8-0b73-486e-b1a0-ded9d9d0849c',
+    redirectTo: 'hall/ed5e3547-bf44-437c-8f9f-a94036ae860c/661ac04f-8289-4eec-9530-c648264eb9a4',
     pathMatch: 'full'
   },
   {

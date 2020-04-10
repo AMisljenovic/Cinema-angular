@@ -13,6 +13,7 @@ import { HomeComponent } from './modules/components/home/home.component';
 import { jqxGridComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxgrid';
 import { jqxButtonComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbuttons';
 import { HallComponent } from './modules/components/hall/hall.component';
+import { ModalComponent } from './modules/components';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { HallComponent } from './modules/components/hall/hall.component';
     FooterComponent,
     HomeComponent,
     HallComponent,
+    ModalComponent,
    ],
   imports: [
     BrowserModule,

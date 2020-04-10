@@ -18,12 +18,12 @@ export class TicketService {
   getByRepertoryId(repertoryId: string): Observable<number[]> {
     const url = `${this.url}/${repertoryId}`;
 
-    return this.http.get<number[]>(url);
+    return this.http.get<number[]>(url, {withCredentials: true});
   }
 
   getByRepertoryAndUserId(repertoryId: string, userId: string = 'fcce9446-45f6-40f9-a8de-8d8ba40aebf9'): Observable<number[]> {
     const url = `${this.url}/${repertoryId}/${userId}`;
 
-    return this.http.get<number[]>(url);
+    return this.http.get<number[]>(url, {withCredentials: true});
   }
 }

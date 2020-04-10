@@ -29,8 +29,12 @@ jqxGrid {
 
 jqxButton {
   margin-top: 150%;
+  margin-left: 18%;
 }
 
+jqxButton#hall-component {
+  background-color: red;
+}
 
 img:hover {
   opacity: 0.8;
