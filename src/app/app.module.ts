@@ -14,6 +14,9 @@ import { jqxGridComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxgrid
 import { jqxButtonComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbuttons';
 import { HallComponent } from './modules/components/hall/hall.component';
 import { ModalComponent } from './modules/components';
+import { MatDialogModule } from '@angular/material/dialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 @NgModule({
   declarations: [
@@ -31,9 +34,14 @@ import { ModalComponent } from './modules/components';
    ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
+    MatDialogModule
+   ],
+  entryComponents: [
+    ModalComponent,
    ],
   bootstrap: [ AppComponent ]
 })
