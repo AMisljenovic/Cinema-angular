@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { RepertoryService } from './repertory-service.service';
 
-describe('RepertoryServiceService', () => {
+describe('RepertoryService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {

@@ -12,6 +12,7 @@ import { FooterComponent } from './modules/components/footer/footer.component';
 import { HomeComponent } from './modules/components/home/home.component';
 import { jqxGridComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxgrid';
 import { jqxButtonComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbuttons';
+import { jqxPanelComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxpanel';
 import { HallComponent } from './modules/components/hall/hall.component';
 import { ModalComponent } from './modules/components';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -25,6 +26,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     jqxLoaderComponent,
     jqxGridComponent,
     jqxButtonComponent,
+    jqxPanelComponent,
     MovieDetailsComponent,
     HeaderComponent,
     FooterComponent,

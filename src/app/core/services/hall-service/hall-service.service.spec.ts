@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { HallService } from './hall-service.service';
 
-describe('HallServiceService', () => {
+describe('HallService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {

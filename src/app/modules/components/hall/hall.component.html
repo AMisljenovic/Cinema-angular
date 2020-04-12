@@ -21,6 +21,7 @@
         (onClick)="openModal()">
           Click here to reserve selected seats
         </jqxButton>
+    <h6 *ngIf="reservationLimit">You cannot have more than 10 bookings per show</h6>
   </div>
   <div class="hall">
     <img class="projector" src="../../../../assets/project-screen.png" alt="">

@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { HallService, TicketService, UserService } from 'src/app/core/services';
+import { HallService, UserService, RepertoryService, ReservationService } from 'src/app/core/services';
 import { jqxGridComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxgrid';
-import { Ticket, Hall, SeatPosition } from 'src/app/shared/models';
+import {  Hall, SeatPosition, Repertory, Reservation } from 'src/app/shared/models';
 import { jqxButtonComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbuttons';
 import { catchError, map } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -22,12 +22,15 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
   private hallIdParamName = 'hallId';
   private jqxGridPagerDisabled = false;
   private cellsRendered = true;
+  private reservationLimit = false;
   columnPropNames: string[] = [];
   seats: number[];
-  userReservations: number[];
+  userReservationsSeats: number[];
+  userReservations: Reservation[];
   dataAdapter: any;
   seatPosition: SeatPosition[] = [];
   hall = new Hall();
+  repertory: Repertory;
   private pagerHeight: number;
   private jqxGridHeight: number;
   private jqxGridDiv: HTMLElement;
@@ -63,15 +66,21 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
   constructor(private route: ActivatedRoute,
               private hallService: HallService,
-              private ticketService: TicketService,
+              private reservationService: ReservationService,
               private userService: UserService,
+              private repertoryService: RepertoryService,
               public matDialog: MatDialog) { }
 
   ngOnInit() {
     const repertoryId = this.route.snapshot.params[this.repertoryIdParamName];
     const hallId = this.route.snapshot.params[this.hallIdParamName];
 
-    this.ticketService.getByRepertoryId(repertoryId)
+    this.repertoryService.getRepertory(repertoryId)
+    .subscribe(repertory => {
+      this.repertory = repertory;
+    });
+
+    this.reservationService.getByRepertoryId(repertoryId)
     .pipe
     (
       catchError(err => {
@@ -87,7 +96,7 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
       });
     });
 
-    this.ticketService.getByRepertoryAndUserId(repertoryId)
+    this.reservationService.getByRepertoryAndUserId(repertoryId)
     .pipe
     (
       catchError(err => {
@@ -96,7 +105,7 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
       })
     )
     .subscribe(seats => {
-      this.userReservations = seats;
+      this.userReservationsSeats = seats;
     });
 
   }
@@ -121,10 +130,10 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
       this.jqxGridHeight =  +this.jqxGridDiv.style.height.split('px')[0];
     }
 
-    if (this.seats && this.userReservations && this.cellsRendered) {
+    if (this.seats && this.userReservationsSeats && this.cellsRendered) {
       for (let i = 0; i < 5; i++) {
         for (let y = 0; y < 5; y++) {
-          if (this.userReservations[i][y] === 1) {
+          if (this.userReservationsSeats[i][y] === 1) {
             const cell = document.getElementById(`${i}-column${y}`) as HTMLElement;
             cell.parentElement.style.backgroundColor = 'dodgerblue';
           } else if (this.seats[i][y] === 1) {
@@ -168,7 +177,7 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
     const seatRow = +event.args.rowindex;
     const seatColumn = +event.args.datafield.split('column')[1];
 
-    if (this.seats[seatRow][seatColumn] === 1 || this.userReservations[seatRow][seatColumn] === 1) {
+    if (this.seats[seatRow][seatColumn] === 1 || this.userReservationsSeats[seatRow][seatColumn] === 1) {
       this.jqxGrid.unselectcell(event.args.rowindex, event.args.datafield);
       return;
     }
@@ -203,12 +212,36 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
   }
 
   openModal() {
+    if (this.reservationsOverLimit()) {
+      this.reservationLimit = true;
+      return;
+    }
+
+    this.reservationLimit = false;
+    const totalPrice = this.seatPosition.length * this.repertory.price;
     const dialogConfig = new MatDialogConfig();
-    // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
     dialogConfig.id = 'modal-component';
-    dialogConfig.height = '350px';
-    dialogConfig.width = '600px';
+    dialogConfig.height = '600px';
+    dialogConfig.width = '480px';
+    dialogConfig.data = {
+      seats: this.seatPosition,
+      totalPrice
+    };
+
     const modalDialog = this.matDialog.open(ModalComponent, dialogConfig);
+  }
+
+
+  reservationsOverLimit() {
+    let numberOfReservations = 0;
+
+    for (let i = 0; i < 5; i++) {
+      for (let y = 0; y < 5; y++) {
+        numberOfReservations = this.userReservationsSeats[i][y] === 1 ? numberOfReservations + 1 : numberOfReservations;
+      }
+    }
+
+    return (numberOfReservations + this.seatPosition.length) > 10;
   }
 }

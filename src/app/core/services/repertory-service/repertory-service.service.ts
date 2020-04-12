@@ -21,5 +21,11 @@ export class RepertoryService {
     return this.http.get<Repertory[]>(url);
   }
 
+  getRepertory(repertoryId: string): Observable<Repertory> {
+    const url = `${this.url}/repertory/${repertoryId}`;
+
+    return this.http.get<Repertory>(url);
+  }
+
 
 }

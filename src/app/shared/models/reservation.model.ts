@@ -1,4 +1,4 @@
-export class Ticket {
+export class Reservation {
   public id: string;
   public repertoryId: string;
   public userId: string;

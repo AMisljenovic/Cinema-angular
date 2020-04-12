@@ -1,16 +1,27 @@
-<div id="modal-content-wrapper">
-  <header id="modal-header">
-      <h1 id="modal-title">Placeholder title</h1>
-  </header>
-  <section id="modal-body">
-      <p>Placeholder description</p>
-  </section>
-  <footer id="modal-footer">
-      <button mat-raised-button id="modal-action-button" (click)="actionFunction()">
-          Do it
-      </button>
-      <button mat-raised-button id="modal-cancel-button" (click)="closeModal()">
-          Go back
-      </button>
-  </footer>
+<div class="wrapper">
+    <div class="seats">
+        <h3>Selected seats</h3>
+        <ul *ngFor="let seat of seats">
+            <li>Row: {{seat.row}}, column: {{seat.column}}</li>
+        </ul>
+        <h3>Total: {{totalPrice}} din.</h3>
+    </div>
+    <div class="action">
+        <jqxButton #jqxButtonAccept
+            [roundedCorners]="all"
+            [template]="'success'"
+            [width]='180'
+            [height]='40'
+            (onClick)="actionFunction()">
+            Reserve
+        </jqxButton>
+        <jqxButton #jqxButtonCancel
+            [roundedCorners]="all"
+            [template]="'danger'"
+            [width]='180'
+            [height]='40'
+            (onClick)="closeModal()">
+            Cancel
+        </jqxButton>
+    </div>
 </div>
