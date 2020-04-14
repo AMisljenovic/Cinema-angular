@@ -11,7 +11,7 @@ export class ModalComponent implements OnInit {
 
   seats: SeatPosition[];
   totalPrice: number;
-
+  seatsReserved = false;
   constructor(
     public dialogRef: MatDialogRef<ModalComponent>,
     @Inject(MAT_DIALOG_DATA) private modalData: any,
@@ -22,13 +22,13 @@ export class ModalComponent implements OnInit {
     this.totalPrice = this.modalData.totalPrice;
   }
 
-  actionFunction() {
-    alert('I am a work in progress');
+  reserve() {
+    this.seatsReserved = true;
     this.closeModal();
   }
 
   closeModal() {
-    this.dialogRef.close();
+    this.dialogRef.close(this.seatsReserved);
   }
 
 }

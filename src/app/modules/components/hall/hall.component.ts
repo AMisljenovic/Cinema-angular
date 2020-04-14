@@ -20,7 +20,9 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
   private seatImageUrl = '../../../../assets/seat.png';
   private repertoryIdParamName = 'repertoryId';
   private hallIdParamName = 'hallId';
+  private repertoryId = '';
   private jqxGridPagerDisabled = false;
+  private jqxGridOneTime = true;
   private cellsRendered = true;
   private reservationLimit = false;
   columnPropNames: string[] = [];
@@ -72,15 +74,15 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
               public matDialog: MatDialog) { }
 
   ngOnInit() {
-    const repertoryId = this.route.snapshot.params[this.repertoryIdParamName];
+    this.repertoryId = this.route.snapshot.params[this.repertoryIdParamName];
     const hallId = this.route.snapshot.params[this.hallIdParamName];
 
-    this.repertoryService.getRepertory(repertoryId)
+    this.repertoryService.getRepertory(this.repertoryId)
     .subscribe(repertory => {
       this.repertory = repertory;
     });
 
-    this.reservationService.getByRepertoryId(repertoryId)
+    this.reservationService.getByRepertoryId(this.repertoryId)
     .pipe
     (
       catchError(err => {
@@ -96,7 +98,7 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
       });
     });
 
-    this.reservationService.getByRepertoryAndUserId(repertoryId)
+    this.reservationService.getByRepertoryAndUserId(this.repertoryId)
     .pipe
     (
       catchError(err => {
@@ -130,24 +132,7 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
       this.jqxGridHeight =  +this.jqxGridDiv.style.height.split('px')[0];
     }
 
-    if (this.seats && this.userReservationsSeats && this.cellsRendered) {
-      for (let i = 0; i < 5; i++) {
-        for (let y = 0; y < 5; y++) {
-          if (this.userReservationsSeats[i][y] === 1) {
-            const cell = document.getElementById(`${i}-column${y}`) as HTMLElement;
-            cell.parentElement.style.backgroundColor = 'dodgerblue';
-          } else if (this.seats[i][y] === 1) {
-            const cell = document.getElementById(`${i}-column${y}`) as HTMLElement;
-            cell.parentElement.style.backgroundColor = '#FFC700';
-          }
-        }
-      }
-
-      this.jqxGridDiv = document.getElementsByClassName('jqx-grid jqx-reset jqx-rc-all jqx-widget jqx-widget-content')[0] as HTMLElement;
-      this.jqxGridDiv.style.height = `${this.jqxGridHeight - this.pagerHeight - 2}px`;
-
-      this.cellsRendered = false;
-    }
+    this.renderSeats();
   }
 
   hallrender(hall: Hall) {
@@ -197,7 +182,7 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
     }
   }
 
-  reserveSeats() {
+  // reserveSeats() {
     // login part
     // this.userService.Login()
     // .pipe
@@ -209,7 +194,7 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
     // )
     // .subscribe(_ => {
     // });
-  }
+  // }
 
   openModal() {
     if (this.reservationsOverLimit()) {
@@ -229,11 +214,16 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
       totalPrice
     };
 
-    const modalDialog = this.matDialog.open(ModalComponent, dialogConfig);
+    this.matDialog.open(ModalComponent, dialogConfig)
+    .afterClosed()
+    .subscribe(seatsReserved => {
+      if (seatsReserved) {
+        this.postReservations();
+      }
+    });
   }
 
-
-  reservationsOverLimit() {
+  private reservationsOverLimit() {
     let numberOfReservations = 0;
 
     for (let i = 0; i < 5; i++) {
@@ -243,5 +233,56 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
     }
 
     return (numberOfReservations + this.seatPosition.length) > 10;
+  }
+
+  private postReservations() {
+    const reservations: Reservation[] = [];
+    this.seatPosition.forEach(seat =>  {
+        reservations.push({
+          id: '',
+          repertoryId: this.repertoryId,
+          seatRow: seat.row,
+          seatColumn: seat.column,
+          userId: 'fcce9446-45f6-40f9-a8de-8d8ba40aebf9'
+        });
+    });
+
+    this.seatPosition.forEach(seat =>  {
+      this.jqxGrid.unselectcell(seat.row, this.columns[seat.column].datafield);
+    });
+
+    this.reservationService.postReservations(reservations)
+    .subscribe(_ => {
+      this.reservationService.getByRepertoryId(this.repertoryId)
+      .subscribe(seats => {
+        this.userReservationsSeats = seats;
+        this.cellsRendered = true;
+        this.renderSeats();
+      });
+    });
+  }
+
+  private renderSeats() {
+    if (this.seats && this.userReservationsSeats && this.cellsRendered) {
+      for (let i = 0; i < 5; i++) {
+        for (let y = 0; y < 5; y++) {
+          if (this.userReservationsSeats[i][y] === 1) {
+            const cell = document.getElementById(`${i}-column${y}`) as HTMLElement;
+            cell.parentElement.style.backgroundColor = 'dodgerblue';
+          } else if (this.seats[i][y] === 1) {
+            const cell = document.getElementById(`${i}-column${y}`) as HTMLElement;
+            cell.parentElement.style.backgroundColor = '#FFC700';
+          }
+        }
+      }
+
+      if (this.jqxGridOneTime) {
+        this.jqxGridDiv = document.getElementsByClassName('jqx-grid jqx-reset jqx-rc-all jqx-widget jqx-widget-content')[0] as HTMLElement;
+        this.jqxGridDiv.style.height = `${this.jqxGridHeight - this.pagerHeight - 2}px`;
+        this.jqxGridOneTime = false;
+      }
+
+      this.cellsRendered = false;
+    }
   }
 }
