@@ -13,7 +13,8 @@
         <h3>Resereved by you</h3>
       </div>
     </div>
-    <jqxButton #jqxButton
+    <div class="button">
+      <jqxButton #jqxButton
         [roundedCorners]="all" [disabled]="seatPosition.length === 0"
         [template]="'inverse'"
         [width]='200'
@@ -21,7 +22,8 @@
         (onClick)="openModal()">
           Click here to reserve selected seats
         </jqxButton>
-    <h6 *ngIf="reservationLimit">You cannot have more than 10 bookings per show</h6>
+      <h6 *ngIf="reservationLimit">You cannot have more than 10 bookings per show</h6>
+    </div>
   </div>
   <div class="hall">
     <img class="projector" src="../../../../assets/project-screen.png" alt="">
