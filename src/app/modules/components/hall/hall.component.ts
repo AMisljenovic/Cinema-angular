@@ -182,20 +182,6 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
     }
   }
 
-  // reserveSeats() {
-    // login part
-    // this.userService.Login()
-    // .pipe
-    // (
-    //   catchError(err => {
-    //     // TODO(AM): add mechanism for relogin
-    //     return of(err);
-    //   })
-    // )
-    // .subscribe(_ => {
-    // });
-  // }
-
   openModal() {
     if (this.reservationsOverLimit()) {
       this.reservationLimit = true;

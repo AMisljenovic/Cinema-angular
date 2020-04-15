@@ -1,46 +1,43 @@
-<app-header></app-header>
-  <div id="wrapper">
-    <div id="title">
-      <h1>{{selectedMovie.title}}</h1>
-      <h2 class="pg-rated-runtime">{{selectedMovie.rated}} | {{selectedMovie.runtime}}
-        <br> {{selectedMovie.released}}
-      </h2>
-    </div>
+<div id="wrapper">
+  <div id="title">
+    <h1>{{selectedMovie.title}}</h1>
+    <h2 class="pg-rated-runtime">{{selectedMovie.rated}} | {{selectedMovie.runtime}}
+      <br> {{selectedMovie.released}}
+    </h2>
+  </div>
 
-    <div class="plot">
-      <div class="image-plot">
-        <img class="poster" src='../../../../assets/{{selectedMovie.id}}.jpg'>
-        <h2 class="plot-header">Plot</h2>
-        <p class="plot-text">{{selectedMovie.plot}}</p>
-        <h2 class="plot-header">Director</h2>
-        <p class="plot-text">{{selectedMovie.director}}</p>
-        <h2 class="plot-header">Cast</h2>
-        <p class="plot-text">{{selectedMovie.actors}}</p>
-      </div>
-      <div class="tickets" *ngIf="isMoviePlaying">
-        <h1 class="buy-tickets">Reserve tickets online</h1>
-        <jqxGrid #repertoryGrid id="jqx-grid"
-        [source]="dataAdapter" [columns]="columns" [showstatusbar]="true"
-        [columngroups]="columngroups"
-        [autoheight]="true"
-        [editable]="false"
-        [selectionmode]="'singlecell'"
-        [showheader]="false"
-        (onCellselect)="cellSelected($event)">
-        </jqxGrid>
-        <jqxButton #jqxButton [disabled]="!playTime"
-        [template]="'inverse'"
-        [roundedCorners]="'all'"
-        [width]='200'
-        [height]='40'
-        (onClick)="seatsSelect()">
-          Click here to select seats
-        </jqxButton>
-      </div>
-      <div class="tickets" *ngIf="!isMoviePlaying">
-        <h1>Coming soon</h1>
-      </div>
+  <div class="plot">
+    <div class="image-plot">
+      <img class="poster" src='../../../../assets/{{selectedMovie.id}}.jpg'>
+      <h2 class="plot-header">Plot</h2>
+      <p class="plot-text">{{selectedMovie.plot}}</p>
+      <h2 class="plot-header">Director</h2>
+      <p class="plot-text">{{selectedMovie.director}}</p>
+      <h2 class="plot-header">Cast</h2>
+      <p class="plot-text">{{selectedMovie.actors}}</p>
     </div>
-
+    <div class="tickets" *ngIf="isMoviePlaying">
+      <h1 class="buy-tickets">Reserve tickets online</h1>
+      <jqxGrid #repertoryGrid id="jqx-grid"
+      [source]="dataAdapter" [columns]="columns" [showstatusbar]="true"
+      [columngroups]="columngroups"
+      [autoheight]="true"
+      [editable]="false"
+      [selectionmode]="'singlecell'"
+      [showheader]="false"
+      (onCellselect)="cellSelected($event)">
+      </jqxGrid>
+      <jqxButton #jqxButton [disabled]="!playTime"
+      [template]="'inverse'"
+      [roundedCorners]="'all'"
+      [width]='200'
+      [height]='40'
+      (onClick)="seatsSelect()">
+        Click here to select seats
+      </jqxButton>
+    </div>
+    <div class="tickets" *ngIf="!isMoviePlaying">
+      <h1>Coming soon</h1>
+    </div>
+  </div>
 </div>
-<app-footer></app-footer>

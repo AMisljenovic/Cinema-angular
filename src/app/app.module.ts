@@ -13,11 +13,13 @@ import { HomeComponent } from './modules/components/home/home.component';
 import { jqxGridComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxgrid';
 import { jqxButtonComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbuttons';
 import { jqxPanelComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxpanel';
+import { jqxInputComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxinput';
+import { jqxPasswordInputComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxpasswordinput';
 import { HallComponent } from './modules/components/hall/hall.component';
 import { ModalComponent } from './modules/components';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { LoginComponent } from './modules/components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -27,12 +29,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     jqxGridComponent,
     jqxButtonComponent,
     jqxPanelComponent,
+    jqxInputComponent,
+    jqxPasswordInputComponent,
     MovieDetailsComponent,
     HeaderComponent,
     FooterComponent,
     HomeComponent,
     HallComponent,
     ModalComponent,
+    LoginComponent,
    ],
   imports: [
     BrowserModule,
@@ -42,6 +47,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     MatDialogModule
    ],
+   providers: [ ],
   entryComponents: [
     ModalComponent,
    ],

@@ -1,0 +1,30 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  margin-left: 40%
+}
+
+.username-email {
+  
+}
+
+.password {
+  margin-top: 3%;
+}
+
+h2 {
+  color: #FFC700;
+  -webkit-text-stroke-color: black;
+  -webkit-text-stroke-width: thin;
+}
+
+.confirm {
+  margin-top: 3%;
+  height: 50px;
+}
+
+h4 {
+  color: red
+}

@@ -1,0 +1,20 @@
+<div class="wrapper">
+  <div class="new-user">
+    <h2>New here? <a href="/home">Sign up</a></h2>
+  </div>
+  <div class="username-email">
+    <h2>Username or email</h2>
+   <jqxInput #emailUsername [width]="200" [height]="30">
+   </jqxInput>
+  </div>
+  <div class="password">
+    <h2>Password</h2>
+    <jqxPasswordInput #password [width]="200" [height]="30">
+    </jqxPasswordInput>
+  </div>
+  <div class="confirm">
+    <jqxButton [width]="200" [height]="30" [template]="'warning'" (onClick)="login()">Login</jqxButton>
+    <h4 *ngIf="worngUserOrPassword">Invalid username(email) or password</h4>
+    <h4 *ngIf="inputCredentials">Please enter both username(email) and password</h4>
+  </div>
+</div>

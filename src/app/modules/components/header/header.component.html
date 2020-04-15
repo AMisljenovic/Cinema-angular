@@ -2,10 +2,13 @@
   <a href="#">
     <img src="assets/Logo.png">
   </a>
-  <!-- <router-link tag="img" width="150" height="60" :src="assets/Logo.png" to="compName"></router-link> -->
+
   <div  class="navbar">
     <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
     <a class="nav-link" href="#">Movies</a>
     <a class="nav-link" href="#">About us</a>
+    <a class="nav-link" *ngIf="!isUserLoggedIn" href="/login">Log in</a>
+    <a class="nav-link" *ngIf="!isUserLoggedIn" href="/register">Register</a>
+    <a class="nav-link" *ngIf="isUserLoggedIn" (click)="logout()">Log out</a>
   </div>
 </nav>

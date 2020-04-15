@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, DoCheck, AfterContentInit, ViewChild, AfterViewInit, ElementRef, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewChecked } from '@angular/core';
 import { Movie, Repertory, WeekPlay } from 'src/app/shared/models';
 import { MovieService, RepertoryService } from 'src/app/core/services';
 import { ActivatedRoute, Router } from '@angular/router';
