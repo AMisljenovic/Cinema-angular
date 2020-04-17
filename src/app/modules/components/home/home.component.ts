@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Movie } from 'src/app/shared/models';
-import { jqxScrollViewComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxscrollview';
 import { MovieService } from 'src/app/core/services';
 import { Router } from '@angular/router';
-import { jqxLoaderComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxloader';
+import { jqxScrollViewComponent } from 'jqwidgets-ng/jqxscrollview';
+import { jqxLoaderComponent } from 'jqwidgets-ng/jqxloader';
 
 @Component({
   selector: 'app-home',

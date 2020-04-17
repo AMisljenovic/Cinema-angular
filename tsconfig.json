@@ -17,18 +17,16 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
   ],
   "files": [
     "src/app/app.module.ts",
-    "node_modules/jqwidgets-scripts/jqwidgets-ts/angular_jqxscrollview.ts",
-    "node_modules/jqwidgets-scripts/jqwidgets-ts/angular_jqxgrid.ts",
   ]
 }

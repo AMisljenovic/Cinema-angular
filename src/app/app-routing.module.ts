@@ -9,7 +9,7 @@ import { LoginComponent } from './modules/components/login/login.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'hall/ed5e3547-bf44-437c-8f9f-a94036ae860c/661ac04f-8289-4eec-9530-c648264eb9a4',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {

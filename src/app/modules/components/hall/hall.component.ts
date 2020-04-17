@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HallService, UserService, RepertoryService, ReservationService } from 'src/app/core/services';
-import { jqxGridComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxgrid';
 import {  Hall, SeatPosition, Repertory, Reservation } from 'src/app/shared/models';
-import { jqxButtonComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbuttons';
 import { catchError, map } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ModalComponent } from '../modal/modal.component';
+import { jqxGridComponent } from 'jqwidgets-ng/jqxgrid';
+import { jqxButtonComponent } from 'jqwidgets-ng/jqxbuttons';
 
 @Component({
   selector: 'app-hall',

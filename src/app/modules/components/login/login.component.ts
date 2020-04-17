@@ -1,11 +1,10 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { jqxInputComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxinput';
-import { jqxPasswordInputComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxpasswordinput';
+import { Component, ViewChild } from '@angular/core';
 import { UserService } from 'src/app/core/services';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
+import { jqxInputComponent } from 'jqwidgets-ng/jqxinput';
+import { jqxPasswordInputComponent } from 'jqwidgets-ng/jqxpasswordinput';
 
 @Component({
   selector: 'app-login',
@@ -20,8 +19,7 @@ export class LoginComponent {
   private inputCredentials = false;
 
   constructor(private userService: UserService,
-              private router: Router,
-              private cd: ChangeDetectorRef) { }
+              private router: Router) { }
 
   login() {
     const emailUsername = this.emailUsername.val();
@@ -46,9 +44,8 @@ export class LoginComponent {
         return;
       }
 
-      sessionStorage.setItem('isUserLoggedIn', 'true');
+      sessionStorage.setItem('user', JSON.stringify(res));
       this.router.navigateByUrl('home');
-      this.cd.detectChanges();
     });
 
 

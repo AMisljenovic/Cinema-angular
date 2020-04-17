@@ -2,9 +2,9 @@ import { Component, OnInit, ViewChild, AfterViewChecked } from '@angular/core';
 import { Movie, Repertory, WeekPlay } from 'src/app/shared/models';
 import { MovieService, RepertoryService } from 'src/app/core/services';
 import { ActivatedRoute, Router } from '@angular/router';
-import { jqxLoaderComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxloader';
-import { jqxGridComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxgrid';
-import { jqxButtonComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbuttons';
+import { jqxLoaderComponent } from 'jqwidgets-ng/jqxloader';
+import { jqxGridComponent } from 'jqwidgets-ng/jqxgrid';
+import { jqxButtonComponent } from 'jqwidgets-ng/jqxbuttons';
 
 @Component({
   selector: 'app-movie-details',

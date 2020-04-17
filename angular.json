@@ -25,7 +25,7 @@
             ],
             "styles": [
               "src/styles.css",
-              "node_modules/jqwidgets-scripts/jqwidgets/styles/jqx.base.css"
+              "node_modules/jqwidgets-ng/jqwidgets/styles/jqx.base.css"
             ],
             "scripts": []
           },
@@ -37,6 +37,8 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
+              "baseHref" : "/jqwidgets-angular-cli-app",
+              "deployUrl" : "/jqwidgets-angular-cli-app",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
