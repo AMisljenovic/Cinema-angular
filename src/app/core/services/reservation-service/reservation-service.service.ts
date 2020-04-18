@@ -21,7 +21,8 @@ export class ReservationService {
     return this.http.get<number[]>(url, {withCredentials: true});
   }
 
-  getByRepertoryAndUserId(repertoryId: string, userId: string = 'fcce9446-45f6-40f9-a8de-8d8ba40aebf9'): Observable<number[]> {
+  getByRepertoryAndUserId(repertoryId: string): Observable<number[]> {
+    const userId = JSON.parse(sessionStorage.getItem('user')).id;
     const url = `${this.url}/${repertoryId}/${userId}`;
 
     return this.http.get<number[]>(url, {withCredentials: true});

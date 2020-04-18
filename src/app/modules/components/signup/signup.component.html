@@ -1,0 +1,19 @@
+<app-header></app-header>
+<div class="wrapper">
+  <div class="form">
+    <h1>Sign up</h1>
+    <jqxValidator #validator>
+      <jqxForm id="form" #form
+      [width]='400'
+      [height]="'auto'"
+      [template]='template'
+      [value]='values'>
+    </jqxForm>
+    </jqxValidator>
+  </div>
+  <div class="in-use">
+    <h3 *ngIf="usernameInUse">Username already in use</h3>
+    <h3 *ngIf="emailInUse">Email already in use</h3>
+  </div>
+</div>
+<app-footer></app-footer>

@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { UserService } from 'src/app/core/services';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -8,10 +8,10 @@ import { jqxPasswordInputComponent } from 'jqwidgets-ng/jqxpasswordinput';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  templateUrl: './signin.component.html',
+  styleUrls: ['./signin.component.css']
 })
-export class LoginComponent {
+export class SignInComponent implements OnInit {
   @ViewChild('emailUsername', {static: false}) emailUsername: jqxInputComponent;
   @ViewChild('password', {static: false}) password: jqxPasswordInputComponent;
 
@@ -21,6 +21,12 @@ export class LoginComponent {
   constructor(private userService: UserService,
               private router: Router) { }
 
+  ngOnInit() {
+    if (sessionStorage.getItem('user') !== null) {
+      this.router.navigateByUrl('home');
+    }
+  }
+
   login() {
     const emailUsername = this.emailUsername.val();
     const password = this.password.val();
@@ -29,7 +35,7 @@ export class LoginComponent {
     const username = this.emailUsername.val().includes('@') ? '' : this.emailUsername.val();
     const email = this.emailUsername.val().includes('@') ? this.emailUsername.val() : '';
 
-    this.userService.login(username, email, password)
+    this.userService.signin(username, email, password)
     .pipe
     (
       catchError(err => {

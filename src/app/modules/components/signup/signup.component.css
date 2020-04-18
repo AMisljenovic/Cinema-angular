@@ -1,0 +1,27 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  margin-left: 40%
+}
+
+h1 {
+  color: #FFC700;
+  -webkit-text-stroke-color: black;
+  -webkit-text-stroke-width: thin;
+  margin-left: 15%;
+}
+
+h3 {
+  color: red;
+}
+
+.form {
+  margin-top: 15%;
+}
+
+.in-use {
+  flex-grow: 1;
+}
+

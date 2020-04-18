@@ -17,30 +17,11 @@ export class MovieService {
   }
 
   getMovies(): Observable<Movie[]> {
-    // const url = 'https://localhost:44361/api/movies';
-
-  //  return this.http.get(url).subscribe(response => {
-  //     return response as Poster[];
-  // });
-    // return this.http.get(url)
-    // .pipe(map(response => {
-    //   return response as Movie[];
-    // }));
-
     return this.http.get<Movie[]>(this.url);
   }
 
   getMovie(id: string): Observable<Movie> {
     const url = `${this.url}/${id}`;
-    // const url = 'https://localhost:44361/api/movies';
-
-  //  return this.http.get(url).subscribe(response => {
-  //     return response as Poster[];
-  // });
-    // return this.http.get(url)
-    // .pipe(map(response => {
-    //   return response as Movie[];
-    // }));
 
     return this.http.get<Movie>(url);
   }

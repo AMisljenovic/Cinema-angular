@@ -1,15 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { MovieDetailsComponent } from './modules/components';
-import { HomeComponent } from './modules/components/home/home.component';
-import { HallComponent } from './modules/components/hall/hall.component';
-import { LoginComponent } from './modules/components/login/login.component';
+import { MovieDetailsComponent, SignUpComponent,
+  HomeComponent, HallComponent, SignInComponent } from './modules/components';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'home',
     pathMatch: 'full'
   },
   {
@@ -17,8 +15,12 @@ const routes: Routes = [
     component: HomeComponent
   },
   {
-    path: 'login',
-    component: LoginComponent
+    path: 'signin',
+    component: SignInComponent
+  },
+  {
+    path: 'signup',
+    component: SignUpComponent
   },
   {
     path: 'movie-details/:id',

@@ -1,7 +1,6 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/core/services';
 import { Router } from '@angular/router';
-import { User } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-header',
@@ -18,8 +17,8 @@ export class HeaderComponent implements OnInit {
     this.isUserLoggedIn = sessionStorage.getItem('user') !== null;
   }
 
-  logout() {
-    this.userService.logout()
+  signout() {
+    this.userService.signout()
     .subscribe(_ => {
       this.isUserLoggedIn = false;
       sessionStorage.removeItem('user');

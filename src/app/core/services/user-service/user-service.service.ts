@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/shared/models';
@@ -15,13 +15,17 @@ export class UserService {
     this.url = `${environment.apiUrl}/users`;
   }
 
-  login(username: string = 'user', email: string, password: string = 'cinemauser'): Observable<User> {
-    const url = `${this.url}/login`;
+  register(user): Observable<string[]> {
+    return this.http.post<string[]>(this.url, user, {withCredentials: true});
+  }
+
+  signin(username: string, email: string, password: string): Observable<User> {
+    const url = `${this.url}/signin`;
     return this.http.post<User>(url, {username, email, password}, {withCredentials: true});
   }
 
-  logout(): Observable<any> {
-    const url = `${this.url}/logout`;
+  signout(): Observable<any> {
+    const url = `${this.url}/signout`;
     return this.http.post(url, {withCredentials: true});
   }
 }
