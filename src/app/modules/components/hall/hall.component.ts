@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild, AfterViewInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewChecked } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HallService, UserService, RepertoryService, ReservationService } from 'src/app/core/services';
-import {  Hall, SeatPosition, Repertory, Reservation } from 'src/app/shared/models';
+import {  Hall, SeatPosition, Repertory, Reservation, User } from 'src/app/shared/models';
 import { catchError, map } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -14,7 +14,7 @@ import { jqxButtonComponent } from 'jqwidgets-ng/jqxbuttons';
   templateUrl: './hall.component.html',
   styleUrls: ['./hall.component.css']
 })
-export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
+export class HallComponent implements OnInit, AfterViewChecked {
   @ViewChild('repertoryGrid', {static: false}) jqxGrid: jqxGridComponent;
   @ViewChild('jqxButton', { static: false }) jqxButton: jqxButtonComponent;
   private seatImageUrl = '../../../../assets/seat.png';
@@ -27,6 +27,7 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
   private reservationLimit = false;
   columnPropNames: string[] = [];
   seats: number[];
+  user: User;
   userReservationsSeats: number[];
   userReservations: Reservation[];
   dataAdapter: any;
@@ -69,11 +70,12 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
   constructor(private route: ActivatedRoute,
               private hallService: HallService,
               private reservationService: ReservationService,
-              private userService: UserService,
+              private router: Router,
               private repertoryService: RepertoryService,
               public matDialog: MatDialog) { }
 
   ngOnInit() {
+    this.user = JSON.parse(sessionStorage.getItem('user'));
     this.repertoryId = this.route.snapshot.params[this.repertoryIdParamName];
     const hallId = this.route.snapshot.params[this.hallIdParamName];
 
@@ -86,7 +88,9 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
     .pipe
     (
       catchError(err => {
-        // TODO(AM): add mechanism for relogin
+        if (err && err.status === 401) {
+          this.redirectToLogin();
+        }
         return of(err);
       })
     )
@@ -98,21 +102,22 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
       });
     });
 
-    this.reservationService.getByRepertoryAndUserId(this.repertoryId)
+    this.reservationService.getByRepertoryAndUserId(this.repertoryId, this.user.id)
     .pipe
     (
       catchError(err => {
-        // TODO(AM): add mechanism for relogin
         return of(err);
       })
     )
     .subscribe(seats => {
       this.userReservationsSeats = seats;
     });
-
   }
 
-  ngAfterViewInit() {
+  redirectToLogin() {
+    alert('You are not authorized to access this page. You will be redirected to sign in page');
+    sessionStorage.removeItem('user');
+    this.router.navigateByUrl('signin');
   }
 
   ngAfterViewChecked() {
@@ -229,7 +234,7 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
           repertoryId: this.repertoryId,
           seatRow: seat.row,
           seatColumn: seat.column,
-          userId: 'fcce9446-45f6-40f9-a8de-8d8ba40aebf9'
+          userId: this.user.id
         });
     });
 
@@ -238,8 +243,26 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
     });
 
     this.reservationService.postReservations(reservations)
+    .pipe(
+      catchError(err => {
+        if (err && err.status === 401) {
+          this.sessionExpired();
+
+          return of(err);
+        }
+      })
+    )
     .subscribe(_ => {
-      this.reservationService.getByRepertoryId(this.repertoryId)
+      this.reservationService.getByRepertoryAndUserId(this.repertoryId, this.user.id)
+      .pipe(
+        catchError(err => {
+          if (err && err.status === 401) {
+            this.sessionExpired();
+
+            return of(err);
+          }
+        })
+      )
       .subscribe(seats => {
         this.userReservationsSeats = seats;
         this.cellsRendered = true;
@@ -270,5 +293,11 @@ export class HallComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
       this.cellsRendered = false;
     }
+  }
+
+  sessionExpired() {
+    alert('Your session has expired. Please sign in again');
+    sessionStorage.removeItem('user');
+    this.router.navigateByUrl('signin');
   }
 }

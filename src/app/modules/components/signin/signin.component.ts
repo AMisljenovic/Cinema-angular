@@ -46,7 +46,7 @@ export class SignInComponent implements OnInit {
       })
     )
     .subscribe(res => {
-      if (res && res.status === 0) {
+      if (res && res.status) {
         return;
       }
 

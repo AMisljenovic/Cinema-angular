@@ -1,21 +1,23 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
-import { jqxFormComponent } from 'jqwidgets-ng/jqxform';
-import { jqxValidatorComponent } from 'jqwidgets-ng/jqxvalidator';
+import { Component, OnInit, Inject, AfterViewInit, ViewChild } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UserService } from 'src/app/core/services';
-import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { jqxFormComponent } from 'jqwidgets-ng/jqxform/public_api';
+import { jqxValidatorComponent } from 'jqwidgets-ng/jqxvalidator/public_api';
 import { Router } from '@angular/router';
+import { of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-signup',
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css']
+  selector: 'app-profile-modal',
+  templateUrl: './profile-modal.component.html',
+  styleUrls: ['./profile-modal.component.css']
 })
-export class SignUpComponent implements AfterViewInit {
+export class ProfileModalComponent implements OnInit, AfterViewInit {
   @ViewChild('form', {static: false}) jqxForm: jqxFormComponent;
   @ViewChild('validator', { static: false }) jqxValidator: jqxValidatorComponent;
   emailInUse = false;
-  usernameInUse = false;
+  wrongPassword = false;
+  profileIsntUpdated = false;
 
   columns: Array<jqwidgets.FormTemplateItem> = [
     {
@@ -23,9 +25,16 @@ export class SignUpComponent implements AfterViewInit {
         name: 'submit',
         text: 'Submit',
         width: '110px',
-        columnWidth: '100%',
-        align: 'center',
-    }
+        columnWidth: '50%',
+        align: 'right',
+    },
+    {
+      type: 'button',
+      name: 'cancel',
+      text: 'Cancel',
+      width: '110px',
+      columnWidth: '50%',
+  }
   ];
   template: Array<jqwidgets.FormTemplateItem> = [
     {
@@ -34,7 +43,7 @@ export class SignUpComponent implements AfterViewInit {
         type: 'text',
         label: 'First name',
         required: true,
-        labelWidth: '85px',
+        labelWidth: '115px',
         width: '250px',
         info: 'Enter first name, it cannot contain special characters',
         infoPosition: 'right',
@@ -45,29 +54,29 @@ export class SignUpComponent implements AfterViewInit {
         type: 'text',
         label: 'Last name',
         required: true,
-        labelWidth: '85px',
+        labelWidth: '115px',
         width: '250px',
         info: 'Enter last name, it cannot contain special characters',
         infoPosition: 'right'
     },
     {
-      bind: 'username',
-      name: 'username',
-      type: 'text',
-      label: 'Username',
-      required: true,
-      labelWidth: '85px',
+      bind: 'newPassword',
+      type: 'password',
+      name: 'password',
+      label: 'New password',
+      required: false,
+      labelWidth: '115px',
       width: '250px',
-      info: 'Your username must be between 4 and 12 characters with no special characters',
+      info: 'Must contains between 4 and 12 characters, at least one upper case, one lower case one digit and one special character',
       infoPosition: 'right'
     },
     {
       bind: 'password',
       type: 'password',
-      name: 'password',
-      label: 'Password',
+      name: 'oldPassword',
+      label: 'Old Password',
       required: true,
-      labelWidth: '85px',
+      labelWidth: '115px',
       width: '250px',
       info: 'Must contains between 4 and 12 characters, at least one upper case, one lower case one digit and one special character',
       infoPosition: 'right'
@@ -78,7 +87,7 @@ export class SignUpComponent implements AfterViewInit {
       type: 'text',
       label: 'Email',
       required: true,
-      labelWidth: '85px',
+      labelWidth: '115px',
       width: '250px',
       info: 'Enter your email adress',
       infoPosition: 'right'
@@ -97,11 +106,19 @@ export class SignUpComponent implements AfterViewInit {
     surname: '',
     email: '',
     password: '',
-    username: ''
+    username: '',
+    newPassword: ''
   };
 
   constructor(private userService: UserService,
-              private router: Router) { }
+              private router: Router,
+              public dialogRef: MatDialogRef<ProfileModalComponent>,
+              @Inject(MAT_DIALOG_DATA) private modalData: any) { }
+
+
+  ngOnInit() {
+    this.values = this.modalData;
+  }
 
   ngAfterViewInit() {
     this.jqxValidator.onValidationSuccess
@@ -119,11 +136,15 @@ export class SignUpComponent implements AfterViewInit {
       this.submit();
     });
 
+    const cancelButton = this.jqxForm.getComponentByName('cancel');
+    cancelButton.on('click', () => {
+      this.closeModal();
+    });
+
     const firstName = this.jqxForm.getComponentByName('firstName');
     const lastName = this.jqxForm.getComponentByName('lastName');
     const email = this.jqxForm.getComponentByName('email');
     const password = this.jqxForm.getComponentByName('password');
-    const username = this.jqxForm.getComponentByName('username');
 
     this.jqxValidator.rules([
       {
@@ -151,19 +172,13 @@ export class SignUpComponent implements AfterViewInit {
         rule: this.containsSpecialCharacters
       },
       {
-        input: username,
-        message: 'Your username must be between 4 and 12 characters!',
-        action: 'keyup, blur',
-        rule: 'length=4,12',
-      },
-      {
         input: password,
         message: 'Must be between 4 and 12 characters, one lowercase, one upper case, one digit and one special character',
         action: 'keyup, blur, valueChanged',
         rule: (input: any, commit: any) => {
           const inputValue = document.querySelector(input.selector).value as string;
 
-          return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,}$/g.test(inputValue);
+          return inputValue.length === 0 ? true : /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,}$/g.test(inputValue);
         },
         position: 'bottom'
       },
@@ -193,24 +208,48 @@ export class SignUpComponent implements AfterViewInit {
   }
 
   register() {
-    this.userService.register(this.values)
+    if (this.values.email === this.modalData.email && this.values.name === this.modalData.name &&
+      this.values.surname === this.modalData.surname && this.values.newPassword === '') {
+      this.profileIsntUpdated = true;
+      return;
+    }
+    this.profileIsntUpdated = false;
+
+    this.values.email = this.modalData.email === this.values.email ? '' : this.values.email;
+
+    this.userService.update(this.values)
       .pipe(
         catchError(err => {
           if (err && err.error && err.status === 409) {
-            this.usernameInUse = err.error.includes('username');
-            this.emailInUse = err.error.includes('email');
+            this.emailInUse = true;
+          } else if (err && err.error === 'PasswordDoesntMatch' && err.status === 401) {
+            this.wrongPassword = true;
+          } else if (err && err.status === 401) {
+            alert('Your cookie is not valid anymore. Please sign in again');
+            this.navigateToSignIn();
           }
 
           return of(err);
-        })
-      )
+        }))
       .subscribe(res => {
-        if (res.length === 0) {
-          this.usernameInUse = false;
+        if (res.status === 200) {
+          this.wrongPassword = false;
           this.emailInUse = false;
-          alert('Successfully registered! You will be redirected to the login page');
-          this.router.navigateByUrl('login');
-        }
-      });
+          this.profileIsntUpdated = false;
+
+          alert('Profile successfully updated! You will be signed out and redirected to sign in page');
+          this.navigateToSignIn();
+        }});
   }
+
+  closeModal() {
+    this.dialogRef.close();
+  }
+
+  navigateToSignIn() {
+    sessionStorage.removeItem('user');
+    this.router.navigateByUrl('signin');
+    this.dialogRef.close();
+  }
+
 }

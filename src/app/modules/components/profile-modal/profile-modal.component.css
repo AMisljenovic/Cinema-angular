@@ -1,0 +1,27 @@
+.wrapper {
+  height: 450px;
+  display: flex;
+  flex-direction: column;
+  background-color:#c9c9c9;
+}
+.seats {
+  flex-grow: 1;
+  width: 200;
+  height: 350;
+}
+
+.action {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+}
+
+h1 {
+  color: #FFC700;
+  -webkit-text-stroke-color: black;
+  -webkit-text-stroke-width: thin;
+}
+
+h3 {
+  color: red;
+}

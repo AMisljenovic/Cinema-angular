@@ -3,7 +3,7 @@
   <div id="title">
     <h1>{{selectedMovie.title}}</h1>
     <h2 class="pg-rated-runtime">{{selectedMovie.rated}} | {{selectedMovie.runtime}}
-      <br> {{selectedMovie.released}}
+      <br>In Theaters: {{selectedMovie.released}}
     </h2>
   </div>
 
@@ -38,7 +38,7 @@
       </jqxButton>
     </div>
     <div class="tickets" *ngIf="!isMoviePlaying">
-      <h1>Coming soon</h1>
+      <h1>Coming Soon</h1>
     </div>
   </div>
 </div>

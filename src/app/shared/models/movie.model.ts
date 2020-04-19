@@ -7,10 +7,8 @@ export class Movie {
     public released: string;
     public runtime: string;
     public genre: string;
-    public writer: string;
     public actors: string;
     public plot: string;
-    public country: string;
     public poster: string;
     public playing: boolean;
 }

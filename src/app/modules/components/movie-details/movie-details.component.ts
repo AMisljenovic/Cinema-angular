@@ -65,7 +65,7 @@ export class MovieDetailsComponent implements OnInit, AfterViewChecked {
   }
 
   ngAfterViewChecked() {
-    if (!this.jqxGridPagerDisabled) {
+    if (!this.jqxGridPagerDisabled && this.isMoviePlaying) {
       // tslint:disable-next-line: max-line-length
       const pager = document.getElementsByClassName('jqx-clear jqx-position-absolute jqx-grid-statusbar jqx-widget-header')[0] as HTMLElement;
       pager.style.backgroundColor = '#c9c9c9';
