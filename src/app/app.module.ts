@@ -19,6 +19,7 @@ import { jqxPasswordInputModule } from 'jqwidgets-ng/jqxpasswordinput';
 import { jqxValidatorModule } from 'jqwidgets-ng/jqxvalidator';
 import { ProfileComponent } from './modules/components/profile/profile.component';
 import { ProfileModalComponent } from './modules/components/profile-modal/profile-modal.component';
+import { PageNotFoundComponent } from './modules/components/page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { ProfileModalComponent } from './modules/components/profile-modal/profil
     SignUpComponent,
     ProfileComponent,
     ProfileModalComponent,
+    PageNotFoundComponent,
    ],
   imports: [
     jqxGridModule,

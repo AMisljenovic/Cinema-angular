@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MovieDetailsComponent, SignUpComponent,
   HomeComponent, HallComponent, SignInComponent } from './modules/components';
 import { ProfileComponent } from './modules/components/profile/profile.component';
+import { PageNotFoundComponent } from './modules/components/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {
@@ -34,6 +35,10 @@ const routes: Routes = [
   {
     path: 'hall/:hallId/:repertoryId',
     component: HallComponent
+  },
+  {
+    path: '**',
+    component: PageNotFoundComponent
   },
 ];
 
