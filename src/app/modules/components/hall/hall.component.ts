@@ -90,6 +90,7 @@ export class HallComponent implements OnInit, AfterViewChecked {
           this.redirectToLogin();
         } else if (err && (err.status === 0 || err.status === 500)) {
           this.isServerDown = true;
+          this.jqxGridPagerDisabled = true;
         }
         return of(err);
       })

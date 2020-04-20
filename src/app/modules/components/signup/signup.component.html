@@ -1,5 +1,5 @@
 <app-header></app-header>
-<div class="wrapper">
+<div *ngIf="!isServerDown" class="wrapper">
   <div class="form">
     <h1>Sign Up</h1>
     <jqxValidator #validator>
@@ -16,4 +16,5 @@
     <h3 *ngIf="emailInUse">Email already in use</h3>
   </div>
 </div>
+<app-server-down *ngIf="isServerDown"></app-server-down>
 <app-footer></app-footer>

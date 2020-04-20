@@ -27,6 +27,12 @@ export class ReservationService {
     return this.http.get<number[]>(url, {withCredentials: true});
   }
 
+  getByUserId(userId: string): Observable<Reservation[]> {
+    const url = `${this.url}/user/${userId}`;
+
+    return this.http.get<Reservation[]>(url, {withCredentials: true});
+  }
+
   postReservations(reservations: Reservation[]) {
     return this.http.post(this.url, reservations, {withCredentials: true});
   }

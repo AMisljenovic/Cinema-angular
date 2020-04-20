@@ -41,6 +41,6 @@
 <div class="invalid-ids">
   <h1 *ngIf="!isHallIdValid">Hall id in url is not valid</h1>
   <h1 *ngIf="!isRepertoryIdValid">Repertory id in url is not valid</h1>
-  <h1 *ngIf="isServerDown">Server is down. Please contact support.</h1>
+  <app-server-down *ngIf="isServerDown"></app-server-down>
 </div>
 <app-footer></app-footer>

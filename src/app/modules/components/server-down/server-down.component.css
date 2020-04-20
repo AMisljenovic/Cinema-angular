@@ -1,0 +1,11 @@
+.server-down {
+  height: 100%;
+}
+
+.server-down h1 {
+  margin-top: 8%;
+  align-content: center;
+  color: #FFC700;
+  -webkit-text-stroke-color: black;
+  -webkit-text-stroke-width: thin;
+}

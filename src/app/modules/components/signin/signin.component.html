@@ -1,5 +1,5 @@
 <app-header></app-header>
-<div class="wrapper">
+<div *ngIf="!isServerDown" class="wrapper">
   <div class="new-user">
     <h2>New here? <a href="/signup">Sign up</a></h2>
   </div>
@@ -19,4 +19,5 @@
     <h4 *ngIf="inputCredentials">Please enter both username(email) and password</h4>
   </div>
 </div>
+<app-server-down *ngIf="isServerDown"></app-server-down>
 <app-footer></app-footer>

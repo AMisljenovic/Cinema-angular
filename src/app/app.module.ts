@@ -20,6 +20,7 @@ import { jqxValidatorModule } from 'jqwidgets-ng/jqxvalidator';
 import { ProfileComponent } from './modules/components/profile/profile.component';
 import { ProfileModalComponent } from './modules/components/profile-modal/profile-modal.component';
 import { PageNotFoundComponent } from './modules/components/page-not-found/page-not-found.component';
+import { ServerDownComponent } from './modules/components/server-down/server-down.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { PageNotFoundComponent } from './modules/components/page-not-found/page-
     ProfileComponent,
     ProfileModalComponent,
     PageNotFoundComponent,
+    ServerDownComponent,
    ],
   imports: [
     jqxGridModule,

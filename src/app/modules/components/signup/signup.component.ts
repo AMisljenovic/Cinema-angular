@@ -16,6 +16,7 @@ export class SignUpComponent implements AfterViewInit {
   @ViewChild('validator', { static: false }) jqxValidator: jqxValidatorComponent;
   emailInUse = false;
   usernameInUse = false;
+  isServerDown = false;
 
   columns: Array<jqwidgets.FormTemplateItem> = [
     {
@@ -199,6 +200,8 @@ export class SignUpComponent implements AfterViewInit {
           if (err && err.error && err.status === 409) {
             this.usernameInUse = err.error.includes('username');
             this.emailInUse = err.error.includes('email');
+          } else if (err && (err.status === 0 || err.status === 500)) {
+            this.isServerDown = true;
           }
 
           return of(err);

@@ -25,3 +25,15 @@ h1 {
 h3 {
   color: red;
 }
+
+.server-down {
+  height: 100%;
+}
+
+.server-down h1 {
+  margin-top: 5%;
+  align-content: center;
+  color: #FFC700;
+  -webkit-text-stroke-color: black;
+  -webkit-text-stroke-width: thin;
+}

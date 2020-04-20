@@ -15,8 +15,9 @@ export class SignInComponent implements OnInit {
   @ViewChild('emailUsername', {static: false}) emailUsername: jqxInputComponent;
   @ViewChild('password', {static: false}) password: jqxPasswordInputComponent;
 
-  private worngUserOrPassword = false;
-  private inputCredentials = false;
+  worngUserOrPassword = false;
+  inputCredentials = false;
+  isServerDown = false;
 
   constructor(private userService: UserService,
               private router: Router) { }
@@ -41,12 +42,15 @@ export class SignInComponent implements OnInit {
       catchError(err => {
         if (err.status === 401) {
           this.worngUserOrPassword = true;
+        } else if (err && (err.status === 0 || err.status === 500)) {
+          this.isServerDown = true;
         }
+
         return of(err);
       })
     )
     .subscribe(res => {
-      if (res && res.status) {
+      if (res && res.status !== undefined) {
         return;
       }
 

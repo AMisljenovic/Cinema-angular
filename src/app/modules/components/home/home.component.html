@@ -35,8 +35,5 @@
     <img id="coming-4" class="all-movies-poster-coming" (click)="selectMovie($event)" >
   </div>
 </div>
-<div *ngIf="isServerDown" class="server-down">
-  <h1>Server is down. Please contact support.</h1>
-</div>
-
+<app-server-down *ngIf="isServerDown"></app-server-down>
 <app-footer></app-footer>

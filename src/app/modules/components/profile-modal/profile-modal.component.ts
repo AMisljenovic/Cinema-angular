@@ -18,6 +18,7 @@ export class ProfileModalComponent implements OnInit, AfterViewInit {
   emailInUse = false;
   wrongPassword = false;
   profileIsntUpdated = false;
+  isServerDown = false;
 
   columns: Array<jqwidgets.FormTemplateItem> = [
     {
@@ -227,6 +228,8 @@ export class ProfileModalComponent implements OnInit, AfterViewInit {
           } else if (err && err.status === 401) {
             alert('Your cookie is not valid anymore. Please sign in again');
             this.navigateToSignIn();
+          } else if (err && (err.status === 0 || err.status === 500)) {
+            this.isServerDown = true;
           }
 
           return of(err);

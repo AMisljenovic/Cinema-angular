@@ -43,6 +43,6 @@
 </div>
 <div *ngIf="!isMovieIdValid || isServerDown" class="movie-id-invalid">
   <h1 *ngIf="!isServerDown">Movie id in url is not valid</h1>
-  <h1 *ngIf="isServerDown">Server is down. Please contact support.</h1>
+  <app-server-down *ngIf="isServerDown"></app-server-down>
 </div>
 <app-footer></app-footer>

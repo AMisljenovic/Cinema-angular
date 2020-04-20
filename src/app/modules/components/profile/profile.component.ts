@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { User } from 'src/app/shared/models';
+import { User, Reservation, Movie, Repertory } from 'src/app/shared/models';
 import { ReservationService, UserService } from 'src/app/core/services';
 import { Router } from '@angular/router';
 import { ProfileModalComponent } from '../profile-modal/profile-modal.component';
@@ -21,6 +21,35 @@ export class ProfileComponent implements OnInit {
   isServerDown = false;
   ConfrimDeletion = false;
   wrongPassword = false;
+  reservations: Reservation[] = [];
+  movies: Movie[] = [];
+  repertoires: Repertory[] = [];
+
+  source: any = [
+    {
+      localdata: [],
+      datatype: 'array',
+      datafields:
+      [
+        { name: 'movie', type: 'string' },
+        { name: 'date', type: 'string' },
+        { name: 'time', type: 'string' },
+        { name: 'row', type: 'string' },
+        { name: 'column', type: 'string' },
+        { name: 'price', type: 'string' },
+      ]
+    }
+  ];
+  dataAdapter: any;
+
+  public columns: jqwidgets.GridColumn[] = [
+    { text: 'Movie', datafield: 'movie'},
+    { text: 'Date', datafield: 'date'},
+    { text: 'Time', datafield: 'time'},
+    { text: 'Row', datafield: 'row'},
+    { text: 'Column', datafield: 'column'},
+    { text: 'Price', datafield: 'price'},
+  ];
 
   constructor(private router: Router,
               private userService: UserService,
@@ -38,13 +67,25 @@ export class ProfileComponent implements OnInit {
     this.healthService.checkHealth()
     .pipe(
       catchError(err => {
-        if (err && (err.status === 0 || err.status === 500)) {
-          this.isServerDown = true;
-        }
+        this.serverDown(err);
         return of(err);
       })
       )
       .subscribe(_ => console.log(_));
+
+    this.reservationService.getByUserId(this.user.id)
+    .pipe(
+      catchError(err => {
+        if (err && err.status === 401) {
+          this.redirectToLogin();
+        }
+        // ADD logic to bekend to retrevie structure {ReservationId,movieName,Date,time,row,column,price}
+        // also maybe to add din. in migration
+        return of(err);
+      })
+    )
+    .subscribe(reservations => console.log(reservations));
+
   }
 
   edit() {
@@ -72,9 +113,8 @@ export class ProfileComponent implements OnInit {
       catchError(err => {
         if (err && err.status === 401) {
           this.wrongPassword = true;
-        } else if (err && (err.status === 0 || err.status === 500)) {
-          this.isServerDown = true;
         }
+        this.serverDown(err);
 
         return of(err);
       })
@@ -89,5 +129,17 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+
+  serverDown(err) {
+    if (err && (err.status === 0 || err.status === 500)) {
+      this.isServerDown = true;
+    }
+  }
+
+  redirectToLogin() {
+    alert('You are not authorized to access this page. You will be redirected to sign in page');
+    sessionStorage.removeItem('user');
+    this.router.navigateByUrl('signin');
+  }
 
 }

@@ -19,8 +19,11 @@
       </div>
     </div>
   </div>
+  <div>
+    <jqxGrid #myGrid (onRowselect)="myGridOnRowSelect($event)" (onRowunselect)="myGridOnRowUnselect($event)"
+        [width]="500" [height]="350" [source]="dataAdapter" [columns]="columns" >
+  </jqxGrid>
+  </div>
 </div>
-<div *ngIf="isServerDown" class="server-down">
-  <h1>Server is down. Please contact support.</h1>
-</div>
+<app-server-down *ngIf="isServerDown"></app-server-down>
 <app-footer></app-footer>

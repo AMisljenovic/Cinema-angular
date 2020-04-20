@@ -1,4 +1,4 @@
-<div class="wrapper">
+<div *ngIf="!isServerDown" class="wrapper">
   <div class="form">
     <h1>Update Profile</h1>
     <jqxValidator #validator>
@@ -15,4 +15,7 @@
     <h3 *ngIf="wrongPassword">Old password doesn't match</h3>
     <h3 *ngIf="profileIsntUpdated">You haven't changed any profile field</h3>
   </div>
+</div>
+<div *ngIf="isServerDown" class="server-down">
+  <h1>Server is down. Please contact support.</h1>
 </div>
