@@ -17,8 +17,10 @@ export class MovieDetailsComponent implements OnInit, AfterViewChecked {
   @ViewChild('jqxButton', { static: false }) jqxButton: jqxButtonComponent;
   private movieIdParamName = 'id';
   private jqxGridPagerDisabled = false;
+  isMovieIdValid = true;
   playTime: string;
   day: number;
+  offset: number;
   isMoviePlaying: boolean;
   selectedMovie: Movie;
   repertoires: Repertory[];
@@ -39,7 +41,7 @@ export class MovieDetailsComponent implements OnInit, AfterViewChecked {
   dataAdapter: any;
 
   public columns: jqwidgets.GridColumn[] = [
-    { text: 'Day', datafield: 'day', width: 100},
+    { text: 'Day', datafield: 'day', width: 130},
     { text: 'First play', datafield: 'firstPlay'},
     { text: 'Second play', datafield: 'secondPlay'},
     { text: 'Thrid play', datafield: 'thirdPlay'},
@@ -54,6 +56,10 @@ export class MovieDetailsComponent implements OnInit, AfterViewChecked {
     const id = this.route.snapshot.params[this.movieIdParamName];
     this.movieService.getMovie(id)
       .subscribe(movie => {
+        if (movie === null) {
+          this.isMovieIdValid = false;
+          return;
+        }
         this.selectedMovie = movie;
         this.isMoviePlaying = movie.playing;
         this.repertoryService.getRepertoiresByMoveId(movie.id)
@@ -98,8 +104,24 @@ export class MovieDetailsComponent implements OnInit, AfterViewChecked {
     });
 
     const days = [monday, tuesday, wednesday, thursday, friday , saturday, sunday];
+    const sourceData = [];
 
-    this.source.localdata = days;
+    const dateNow = new Date(2020, 3, 25);
+    this.offset = dateNow.getDay() - 1;
+
+    for (let index = 0; index < 7; index++) {
+      const nextday = new Date(dateNow);
+      nextday.setDate(dateNow.getDate() + index);
+      const parsedDate = nextday.toLocaleDateString().split('/');
+
+      const dayIndex = (index + this.offset) % 7;
+      const currentDate = days[dayIndex];
+      currentDate.day  += ` - ${parsedDate[1]}.${parsedDate[0]}`;
+
+      sourceData.push(currentDate);
+    }
+
+    this.source.localdata = sourceData;
     this.dataAdapter = new jqx.dataAdapter(this.source);
   }
 
@@ -126,7 +148,7 @@ export class MovieDetailsComponent implements OnInit, AfterViewChecked {
   }
 
   seatsSelect() {
-    const repertory = this.repertoires.find(rep => rep.playTime === this.playTime && rep.day === (this.day + 1));
+    const repertory = this.repertoires.find(rep => rep.playTime === this.playTime && rep.day === ((this.day + this.offset) % 7 + 1));
 
     this.router.navigateByUrl(`hall/${repertory.hallId}/${repertory.id}`);
   }

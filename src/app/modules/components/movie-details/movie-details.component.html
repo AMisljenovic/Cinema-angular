@@ -1,10 +1,9 @@
 <app-header></app-header>
-<div id="wrapper">
+<div *ngIf="isMovieIdValid" id="wrapper">
   <div id="title">
     <h1>{{selectedMovie.title}}</h1>
-    <h2 class="pg-rated-runtime">{{selectedMovie.rated}} | {{selectedMovie.runtime}}
-      <br>In Theaters: {{selectedMovie.released}}
-    </h2>
+    <h2 class="pg-rated-runtime">{{selectedMovie.rated}} | {{selectedMovie.runtime}}</h2>
+    <h2 class="pg-rated-runtime">In Theaters: {{selectedMovie.released}}</h2>
   </div>
 
   <div class="plot">
@@ -41,5 +40,8 @@
       <h1>Coming Soon</h1>
     </div>
   </div>
+</div>
+<div *ngIf="!isMovieIdValid" class="movie-id-invalid">
+  <h1>Movie id in url is not valid</h1>
 </div>
 <app-footer></app-footer>

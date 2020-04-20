@@ -1,5 +1,5 @@
 <app-header></app-header>
-<div class="wrapper">
+<div *ngIf="isHallIdValid  && isRepertoryIdValid" class="wrapper">
   <div class="legend">
     <h1>Hall {{hall.name}}</h1>
     <div class="legend-items">
@@ -37,5 +37,9 @@
       (onCellunselect)="cellUnselected($event)">
     </jqxGrid>
   </div>
+</div>
+<div class="invalid-ids">
+  <h1 *ngIf="!isHallIdValid">Hall id in url is not valid</h1>
+  <h1 *ngIf="!isRepertoryIdValid">Repertory id in url is not valid</h1>
 </div>
 <app-footer></app-footer>

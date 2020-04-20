@@ -25,6 +25,8 @@ export class HallComponent implements OnInit, AfterViewChecked {
   private jqxGridOneTime = true;
   private cellsRendered = true;
   private reservationLimit = false;
+  isHallIdValid = true;
+  isRepertoryIdValid = true;
   columnPropNames: string[] = [];
   seats: number[];
   user: User;
@@ -81,6 +83,10 @@ export class HallComponent implements OnInit, AfterViewChecked {
 
     this.repertoryService.getRepertory(this.repertoryId)
     .subscribe(repertory => {
+      if (repertory === null) {
+        this.isRepertoryIdValid = false;
+        return;
+      }
       this.repertory = repertory;
     });
 
@@ -96,6 +102,10 @@ export class HallComponent implements OnInit, AfterViewChecked {
     )
     .subscribe(seats => {
       this.hallService.get(hallId).subscribe(hall => {
+        if (hall === null) {
+          this.isHallIdValid = false;
+          return;
+        }
         this.seats = seats;
         this.hall = hall;
         this.hallrender(hall);
