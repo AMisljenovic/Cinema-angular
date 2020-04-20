@@ -1,5 +1,5 @@
 <app-header></app-header>
-<div *ngIf="isMovieIdValid" id="wrapper">
+<div *ngIf="isMovieIdValid && !isServerDown" id="wrapper">
   <div id="title">
     <h1>{{selectedMovie.title}}</h1>
     <h2 class="pg-rated-runtime">{{selectedMovie.rated}} | {{selectedMovie.runtime}}</h2>
@@ -41,7 +41,8 @@
     </div>
   </div>
 </div>
-<div *ngIf="!isMovieIdValid" class="movie-id-invalid">
-  <h1>Movie id in url is not valid</h1>
+<div *ngIf="!isMovieIdValid || isServerDown" class="movie-id-invalid">
+  <h1 *ngIf="!isServerDown">Movie id in url is not valid</h1>
+  <h1 *ngIf="isServerDown">Server is down. Please contact support.</h1>
 </div>
 <app-footer></app-footer>

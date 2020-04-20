@@ -4,6 +4,8 @@ import { MovieService } from 'src/app/core/services';
 import { Router } from '@angular/router';
 import { jqxScrollViewComponent } from 'jqwidgets-ng/jqxscrollview';
 import { jqxLoaderComponent } from 'jqwidgets-ng/jqxloader';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -14,6 +16,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   @ViewChild('myScrollView', {static: false}) myScrollView: jqxScrollViewComponent;
   @ViewChild('jqxLoader', { static: false }) jqxLoader: jqxLoaderComponent;
 
+  isServerDown = false;
   announcedMovies: Movie[];
   playingMovies: Movie[];
   movies: Movie[];
@@ -74,6 +77,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.jqxLoader.open();
 
     this.movieService.getMovies()
+    .pipe(
+      catchError(err => {
+        if (err && (err.status === 0 || err.status === 500)) {
+          this.isServerDown = true;
+        }
+        return of(err);
+      })
+    )
     .subscribe(movies => {
       this.jqxLoader.close();
       this.movies = movies;

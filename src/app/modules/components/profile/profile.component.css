@@ -5,7 +5,6 @@
 }
 
 .profile-data {
-  /* margin-left: 5%; */
   margin-top: 6%;
   display: flex;
   flex-direction: row;
@@ -17,7 +16,6 @@
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  /* width: 600px; */
   margin-left: 5%;
   flex-grow: 0;
 }
@@ -66,4 +64,16 @@ h2 {
 .fields {
   margin-bottom: 2%;
   margin-left: 3%;
+}
+
+.server-down {
+  height: 100%;
+}
+
+.server-down h1 {
+  margin-top: 5%;
+  align-content: center;
+  color: #FFC700;
+  -webkit-text-stroke-color: black;
+  -webkit-text-stroke-width: thin;
 }

@@ -7,6 +7,7 @@ import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { jqxPasswordInputComponent } from 'jqwidgets-ng/jqxpasswordinput/public_api';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { HealthService } from 'src/app/core/services/health.service';
 
 @Component({
   selector: 'app-profile',
@@ -17,12 +18,14 @@ export class ProfileComponent implements OnInit {
   @ViewChild('jqxPassword', {static: false}) jqxPassword: jqxPasswordInputComponent;
 
   user: User;
+  isServerDown = false;
   ConfrimDeletion = false;
   wrongPassword = false;
 
   constructor(private router: Router,
               private userService: UserService,
               private reservationService: ReservationService,
+              private healthService: HealthService,
               public matDialog: MatDialog) { }
 
   ngOnInit() {
@@ -31,8 +34,18 @@ export class ProfileComponent implements OnInit {
       alert('You must be signed in to access this page');
       this.router.navigateByUrl('signin');
     }
-  }
 
+    this.healthService.checkHealth()
+    .pipe(
+      catchError(err => {
+        if (err && (err.status === 0 || err.status === 500)) {
+          this.isServerDown = true;
+        }
+        return of(err);
+      })
+      )
+      .subscribe(_ => console.log(_));
+  }
 
   edit() {
     const dialogConfig = new MatDialogConfig();
@@ -59,6 +72,8 @@ export class ProfileComponent implements OnInit {
       catchError(err => {
         if (err && err.status === 401) {
           this.wrongPassword = true;
+        } else if (err && (err.status === 0 || err.status === 500)) {
+          this.isServerDown = true;
         }
 
         return of(err);

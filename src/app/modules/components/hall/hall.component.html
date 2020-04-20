@@ -1,5 +1,5 @@
 <app-header></app-header>
-<div *ngIf="isHallIdValid  && isRepertoryIdValid" class="wrapper">
+<div *ngIf="isHallIdValid  && isRepertoryIdValid && !isServerDown" class="wrapper">
   <div class="legend">
     <h1>Hall {{hall.name}}</h1>
     <div class="legend-items">
@@ -41,5 +41,6 @@
 <div class="invalid-ids">
   <h1 *ngIf="!isHallIdValid">Hall id in url is not valid</h1>
   <h1 *ngIf="!isRepertoryIdValid">Repertory id in url is not valid</h1>
+  <h1 *ngIf="isServerDown">Server is down. Please contact support.</h1>
 </div>
 <app-footer></app-footer>

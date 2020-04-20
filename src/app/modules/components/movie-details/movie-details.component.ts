@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { jqxLoaderComponent } from 'jqwidgets-ng/jqxloader';
 import { jqxGridComponent } from 'jqwidgets-ng/jqxgrid';
 import { jqxButtonComponent } from 'jqwidgets-ng/jqxbuttons';
+import { of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-movie-details',
@@ -18,6 +20,7 @@ export class MovieDetailsComponent implements OnInit, AfterViewChecked {
   private movieIdParamName = 'id';
   private jqxGridPagerDisabled = false;
   isMovieIdValid = true;
+  isServerDown = false;
   playTime: string;
   day: number;
   offset: number;
@@ -55,6 +58,14 @@ export class MovieDetailsComponent implements OnInit, AfterViewChecked {
   ngOnInit() {
     const id = this.route.snapshot.params[this.movieIdParamName];
     this.movieService.getMovie(id)
+    .pipe(
+      catchError(err => {
+        if (err && (err.status === 0 || err.status === 500)) {
+          this.isServerDown = true;
+        }
+        return of(err);
+      })
+      )
       .subscribe(movie => {
         if (movie === null) {
           this.isMovieIdValid = false;

@@ -1,5 +1,5 @@
 <app-header></app-header>
-<div class="wrapper">
+<div *ngIf="!isServerDown" class="wrapper">
   <div class="profile-data">
     <div class="fields">
       <h2>{{user.name}} {{user.surname}}</h2>
@@ -19,5 +19,8 @@
       </div>
     </div>
   </div>
+</div>
+<div *ngIf="isServerDown" class="server-down">
+  <h1>Server is down. Please contact support.</h1>
 </div>
 <app-footer></app-footer>

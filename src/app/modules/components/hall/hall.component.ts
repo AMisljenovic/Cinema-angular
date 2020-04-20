@@ -27,6 +27,7 @@ export class HallComponent implements OnInit, AfterViewChecked {
   private reservationLimit = false;
   isHallIdValid = true;
   isRepertoryIdValid = true;
+  isServerDown = false;
   columnPropNames: string[] = [];
   seats: number[];
   user: User;
@@ -82,6 +83,17 @@ export class HallComponent implements OnInit, AfterViewChecked {
     const hallId = this.route.snapshot.params[this.hallIdParamName];
 
     this.repertoryService.getRepertory(this.repertoryId)
+    .pipe
+    (
+      catchError(err => {
+        if (err && err.status === 401) {
+          this.redirectToLogin();
+        } else if (err && (err.status === 0 || err.status === 500)) {
+          this.isServerDown = true;
+        }
+        return of(err);
+      })
+    )
     .subscribe(repertory => {
       if (repertory === null) {
         this.isRepertoryIdValid = false;
@@ -96,6 +108,8 @@ export class HallComponent implements OnInit, AfterViewChecked {
       catchError(err => {
         if (err && err.status === 401) {
           this.redirectToLogin();
+        } else if (err && (err.status === 0 || err.status === 500)) {
+          this.isServerDown = true;
         }
         return of(err);
       })
