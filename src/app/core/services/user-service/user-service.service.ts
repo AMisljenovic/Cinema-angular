@@ -23,6 +23,11 @@ export class UserService {
     return this.http.put<any>(this.url, user, {withCredentials: true});
   }
 
+  delete(user): Observable<any> {
+    const url = `${this.url}/delete`;
+    return this.http.post<any>(url, user, {withCredentials: true});
+  }
+
   signin(username: string, email: string, password: string): Observable<User> {
     const url = `${this.url}/signin`;
     return this.http.post<User>(url, {username, email, password}, {withCredentials: true});

@@ -1,10 +1,23 @@
 <app-header></app-header>
 <div class="wrapper">
   <div class="profile-data">
-    <h2>{{user.name}} {{user.surname}}</h2>
-    <h2>Username: {{user.username}}</h2>
-    <h2>Email: {{user.email}}</h2>
-    <jqxButton (onClick)="edit()" [template]="'warning'" [width]="200" [height]="30">Edit</jqxButton>
+    <div class="fields">
+      <h2>{{user.name}} {{user.surname}}</h2>
+      <h2>Username: {{user.username}}</h2>
+      <h2>Email: {{user.email}}</h2>
+      <jqxButton (onClick)="edit()" [template]="'warning'" [width]="200" [height]="30">Edit</jqxButton>
+    </div>
+    <div class="delete-user">
+      <jqxButton class="delete-button" (onClick)="deleteUser()" [template]="'warning'" [width]="200" [height]="30">Delete user</jqxButton>
+      <div *ngIf="ConfrimDeletion" class="password">
+        <h3>Confirm Password: </h3>
+        <jqxPasswordInput #jqxPassword [width]="200" [height]="30"></jqxPasswordInput>
+        <h4 *ngIf="wrongPassword">Password doesn't match</h4>
+      </div>
+      <div *ngIf="ConfrimDeletion" class="confirm">
+        <jqxButton (onClick)="confirm()" [template]="'danger'" [width]="200" [height]="30">Confirm</jqxButton>
+      </div>
+    </div>
   </div>
 </div>
 <app-footer></app-footer>
