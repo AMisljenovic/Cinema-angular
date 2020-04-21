@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { User, Reservation, Movie, Repertory } from 'src/app/shared/models';
+import { Component, OnInit, ViewChild, AfterViewChecked } from '@angular/core';
+import { User, UserReservation } from 'src/app/shared/models';
 import { ReservationService, UserService } from 'src/app/core/services';
 import { Router } from '@angular/router';
 import { ProfileModalComponent } from '../profile-modal/profile-modal.component';
@@ -8,32 +8,32 @@ import { jqxPasswordInputComponent } from 'jqwidgets-ng/jqxpasswordinput/public_
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { HealthService } from 'src/app/core/services/health.service';
+import { jqxGridComponent } from 'jqwidgets-ng/jqxgrid/public_api';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, AfterViewChecked {
   @ViewChild('jqxPassword', {static: false}) jqxPassword: jqxPasswordInputComponent;
+  @ViewChild('grid', {static: false}) jqxGrid: jqxGridComponent;
 
   user: User;
   isServerDown = false;
   ConfrimDeletion = false;
   wrongPassword = false;
-  reservations: Reservation[] = [];
-  movies: Movie[] = [];
-  repertoires: Repertory[] = [];
-
+  dataLoaded = false;
+  reservations: UserReservation[] = [];
+  reservationsToRemove = [];
   source: any = [
     {
       localdata: [],
       datatype: 'array',
       datafields:
       [
-        { name: 'movie', type: 'string' },
-        { name: 'date', type: 'string' },
-        { name: 'time', type: 'string' },
+        { name: 'movieTitle', type: 'string' },
+        { name: 'dateTime', type: 'string' },
         { name: 'row', type: 'string' },
         { name: 'column', type: 'string' },
         { name: 'price', type: 'string' },
@@ -43,9 +43,8 @@ export class ProfileComponent implements OnInit {
   dataAdapter: any;
 
   public columns: jqwidgets.GridColumn[] = [
-    { text: 'Movie', datafield: 'movie'},
-    { text: 'Date', datafield: 'date'},
-    { text: 'Time', datafield: 'time'},
+    { text: 'Movie Title', datafield: 'movieTitle', width: '250'},
+    { text: 'Date Time', datafield: 'dateTime', width: '160'},
     { text: 'Row', datafield: 'row'},
     { text: 'Column', datafield: 'column'},
     { text: 'Price', datafield: 'price'},
@@ -58,12 +57,6 @@ export class ProfileComponent implements OnInit {
               public matDialog: MatDialog) { }
 
   ngOnInit() {
-    this.user = JSON.parse(sessionStorage.getItem('user'));
-    if (this.user === null) {
-      alert('You must be signed in to access this page');
-      this.router.navigateByUrl('signin');
-    }
-
     this.healthService.checkHealth()
     .pipe(
       catchError(err => {
@@ -71,21 +64,25 @@ export class ProfileComponent implements OnInit {
         return of(err);
       })
       )
-      .subscribe(_ => console.log(_));
+      .subscribe(_ => {});
 
-    this.reservationService.getByUserId(this.user.id)
-    .pipe(
-      catchError(err => {
-        if (err && err.status === 401) {
-          this.redirectToLogin();
-        }
-        // ADD logic to bekend to retrevie structure {ReservationId,movieName,Date,time,row,column,price}
-        // also maybe to add din. in migration
-        return of(err);
-      })
-    )
-    .subscribe(reservations => console.log(reservations));
+    this.user = JSON.parse(sessionStorage.getItem('user'));
+    if (this.user === null) {
+      alert('You must be signed in to access this page');
+      this.router.navigateByUrl('signin');
+    }
 
+    this.getReservations();
+  }
+
+
+
+  ngAfterViewChecked() {
+    if (!this.dataLoaded && this.reservations.length !== 0) {
+      this.source.localdata = this.reservations;
+      this.dataAdapter = new jqx.dataAdapter(this.source);
+      this.dataLoaded = true;
+    }
   }
 
   edit() {
@@ -129,6 +126,46 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+  gridOnRowSelect(event) {
+
+    const rowData = this.jqxGrid.getrowdata(event.args.rowindex);
+    this.reservationsToRemove.push(rowData);
+  }
+
+  gridOnRowUnselect(event) {
+
+    const rowData = this.jqxGrid.getrowdata(event.args.rowindex);
+    const index = this.reservationsToRemove.findIndex(res => {
+      return res.reservationId === rowData.reservationId;
+    });
+
+    if (index > -1) {
+      this.reservationsToRemove.splice(index, 1);
+    }
+  }
+
+  deleteReservations() {
+    const reservationIds = this.reservationsToRemove.map(res => res.reservationId);
+
+    this.reservationService.deleteByIds(reservationIds)
+    .pipe(
+        catchError(err => {
+          if (err && err.status === 401) {
+            this.redirectToLogin();
+          }
+
+          this.serverDown(err);
+          return of(err);
+        })
+      )
+    .subscribe(response => {
+      if (response === null) {
+        this.getReservations();
+        this.clearGrid();
+        alert('Reservations successfully removed');
+      }
+    });
+  }
 
   serverDown(err) {
     if (err && (err.status === 0 || err.status === 500)) {
@@ -140,6 +177,36 @@ export class ProfileComponent implements OnInit {
     alert('You are not authorized to access this page. You will be redirected to sign in page');
     sessionStorage.removeItem('user');
     this.router.navigateByUrl('signin');
+  }
+
+  clearGrid() {
+    const deleteRowIds = this.reservationsToRemove.map(res => res.uid);
+    this.jqxGrid.deleterow(deleteRowIds);
+    this.reservationsToRemove = [];
+  }
+
+  getReservations() {
+    this.reservationService.getByUserId(this.user.id)
+    .pipe(
+      catchError(err => {
+        if (err && err.status === 401) {
+          this.redirectToLogin();
+        }
+
+        return of(err);
+      }))
+    .subscribe(reservations => this.reservations = reservations
+      .sort((a, b) => {
+        const dateA = (new Date(a.dateTime)).getTime();
+        const dateB = (new Date(b.dateTime)).getTime();
+
+        return dateA - dateB;
+      })
+      .sort((a, b) => a.time > b.time)
+      .map(res => {
+        res.price += ' din.';
+        return res;
+      }));
   }
 
 }

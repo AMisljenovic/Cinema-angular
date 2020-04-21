@@ -5,4 +5,5 @@ export * from './hall.model';
 export * from './user.model';
 export * from './week-play.model';
 export * from './seat-position.model';
+export * from './user-reservation.model';
 

@@ -24,6 +24,15 @@
   align-self: center;
 }
 
+.delete-reservations {
+  margin-left: 10%;
+  align-self: center;
+}
+
+.delete-reservations span {
+  font-size: 20px;
+}
+
 .confirm {
   display: flex;
   flex-direction: row;
@@ -41,6 +50,13 @@ jqxPasswordInput {
   margin-right: 1%;
 }
 
+.reservations {
+  margin-top: 2%;
+  margin-left: 3%;
+  display: flex;
+  flex-direction: row;
+}
+
 h3 {
   color: #FFC700;
   -webkit-text-stroke-color: black;
@@ -55,7 +71,7 @@ h4 {
   margin-left: 2%;
 }
 
-h2 {
+.fields h2 {
   color: #FFC700;
   -webkit-text-stroke-color: black;
   -webkit-text-stroke-width: thin;

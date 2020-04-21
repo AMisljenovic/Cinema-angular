@@ -19,10 +19,18 @@
       </div>
     </div>
   </div>
-  <div>
-    <jqxGrid #myGrid (onRowselect)="myGridOnRowSelect($event)" (onRowunselect)="myGridOnRowUnselect($event)"
-        [width]="500" [height]="350" [source]="dataAdapter" [columns]="columns" >
-  </jqxGrid>
+  <div class="reservations">
+    <div class="table">
+      <jqxGrid #grid (onRowselect)="gridOnRowSelect($event)" (onRowunselect)="gridOnRowUnselect($event)"
+        [width]="800" [height]="450" [source]="dataAdapter" [selectionmode]="'multiplerows'" [columns]="columns" >
+      </jqxGrid>
+    </div>
+    <div class="delete-reservations">
+      <jqxButton [disabled]="reservationsToRemove.length === 0" (onClick)="deleteReservations()"
+      [template]="'danger'"
+      [width]="300"
+      [height]="50"><span>Remove reservations</span></jqxButton>
+    </div>
   </div>
 </div>
 <app-server-down *ngIf="isServerDown"></app-server-down>
