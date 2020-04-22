@@ -4,4 +4,5 @@ export class Reservation {
   public userId: string;
   public seatRow: number;
   public seatColumn: number;
+  public date: string;
 }

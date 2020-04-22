@@ -28,6 +28,8 @@ export class HallComponent implements OnInit, AfterViewChecked {
   isHallIdValid = true;
   isRepertoryIdValid = true;
   isServerDown = false;
+  date: string;
+  dateNow = new Date();
   columnPropNames: string[] = [];
   seats: number[];
   user: User;
@@ -79,6 +81,9 @@ export class HallComponent implements OnInit, AfterViewChecked {
 
   ngOnInit() {
     this.user = JSON.parse(sessionStorage.getItem('user'));
+    if (this.user === null) {
+      this.redirectToLogin();
+    }
     this.repertoryId = this.route.snapshot.params[this.repertoryIdParamName];
     const hallId = this.route.snapshot.params[this.hallIdParamName];
 
@@ -101,6 +106,10 @@ export class HallComponent implements OnInit, AfterViewChecked {
         return;
       }
       this.repertory = repertory;
+
+      const playDate = new Date(this.dateNow);
+      playDate.setDate(this.dateNow.getDate() + repertory.day - this.dateNow.getDay());
+      this.date = playDate.toLocaleDateString();
     });
 
     this.reservationService.getByRepertoryId(this.repertoryId)
@@ -248,7 +257,7 @@ export class HallComponent implements OnInit, AfterViewChecked {
       }
     }
 
-    return (numberOfReservations + this.seatPosition.length) > 10;
+    return (numberOfReservations + this.seatPosition.length) > 4;
   }
 
   private postReservations() {
@@ -259,7 +268,8 @@ export class HallComponent implements OnInit, AfterViewChecked {
           repertoryId: this.repertoryId,
           seatRow: seat.row,
           seatColumn: seat.column,
-          userId: this.user.id
+          userId: this.user.id,
+          date: this.date
         });
     });
 

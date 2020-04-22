@@ -27,6 +27,7 @@ export class MovieDetailsComponent implements OnInit, AfterViewChecked {
   isMoviePlaying: boolean;
   selectedMovie: Movie;
   repertoires: Repertory[];
+  dateNow = new Date();
 
   source: any = [
     {
@@ -117,12 +118,11 @@ export class MovieDetailsComponent implements OnInit, AfterViewChecked {
     const days = [monday, tuesday, wednesday, thursday, friday , saturday, sunday];
     const sourceData = [];
 
-    const dateNow = new Date(2020, 3, 25);
-    this.offset = dateNow.getDay() - 1;
+    this.offset = this.dateNow.getDay() - 1;
 
     for (let index = 0; index < 7; index++) {
-      const nextday = new Date(dateNow);
-      nextday.setDate(dateNow.getDate() + index);
+      const nextday = new Date(this.dateNow);
+      nextday.setDate(this.dateNow.getDate() + index);
       const parsedDate = nextday.toLocaleDateString().split('/');
 
       const dayIndex = (index + this.offset) % 7;
@@ -155,6 +155,8 @@ export class MovieDetailsComponent implements OnInit, AfterViewChecked {
     }
 
     this.day = event.args.rowindex;
+    // const playDate = new Date(this.dateNow);
+    // playDate.setDate(this.dateNow.getDate() + event.args.rowindex);
     this.playTime = this.jqxGrid.getcelltext(event.args.rowindex, event.args.datafield).split(' ')[0];
   }
 
