@@ -3,7 +3,9 @@
     <img src="assets/Logo.png">
   </a>
   <div  class="navbar">
-    <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
+
+    <a class="nav-link" *ngIf="signedInAsAdmin" href="/admin-panel">Admin Panel</a>
+    <a class="nav-link" href="/home">Home</a>
     <a class="nav-link" href="#">About Us</a>
     <a class="nav-link" *ngIf="!isUserLoggedIn" href="/signin">Sign In</a>
     <a class="nav-link" *ngIf="!isUserLoggedIn" href="/signup">Sign Up</a>

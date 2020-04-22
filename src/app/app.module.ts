@@ -5,7 +5,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { ModalComponent, SignUpComponent, MovieDetailsComponent,
-  HeaderComponent, FooterComponent, HomeComponent, HallComponent, SignInComponent } from './modules/components';
+  HeaderComponent, FooterComponent, HomeComponent, HallComponent,
+  SignInComponent, AdministratorPanelComponent, ProfileComponent,
+  ProfileModalComponent, PageNotFoundComponent, ServerDownComponent } from './modules/components';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { jqxGridModule } from 'jqwidgets-ng/jqxgrid';
@@ -17,10 +19,7 @@ import { jqxInputModule } from 'jqwidgets-ng/jqxinput';
 import { jqxFormModule} from 'jqwidgets-ng/jqxform';
 import { jqxPasswordInputModule } from 'jqwidgets-ng/jqxpasswordinput';
 import { jqxValidatorModule } from 'jqwidgets-ng/jqxvalidator';
-import { ProfileComponent } from './modules/components/profile/profile.component';
-import { ProfileModalComponent } from './modules/components/profile-modal/profile-modal.component';
-import { PageNotFoundComponent } from './modules/components/page-not-found/page-not-found.component';
-import { ServerDownComponent } from './modules/components/server-down/server-down.component';
+import { jqxChartModule } from 'jqwidgets-ng/jqxchart';
 
 @NgModule({
   declarations: [
@@ -37,8 +36,10 @@ import { ServerDownComponent } from './modules/components/server-down/server-dow
     ProfileModalComponent,
     PageNotFoundComponent,
     ServerDownComponent,
+    AdministratorPanelComponent,
    ],
   imports: [
+    jqxChartModule,
     jqxGridModule,
     jqxButtonModule,
     jqxInputModule,

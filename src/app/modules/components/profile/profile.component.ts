@@ -7,7 +7,7 @@ import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { jqxPasswordInputComponent } from 'jqwidgets-ng/jqxpasswordinput/public_api';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { HealthService } from 'src/app/core/services/health.service';
+import { HealthService } from 'src/app/core/services/health-service/health.service';
 import { jqxGridComponent } from 'jqwidgets-ng/jqxgrid/public_api';
 
 @Component({

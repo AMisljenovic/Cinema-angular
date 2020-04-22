@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MovieDetailsComponent, SignUpComponent,
-  HomeComponent, HallComponent, SignInComponent } from './modules/components';
+  HomeComponent, HallComponent, SignInComponent, AdministratorPanelComponent } from './modules/components';
 import { ProfileComponent } from './modules/components/profile/profile.component';
 import { PageNotFoundComponent } from './modules/components/page-not-found/page-not-found.component';
 
@@ -11,6 +11,10 @@ const routes: Routes = [
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
+  },
+  {
+    path: 'admin-panel',
+    component: AdministratorPanelComponent
   },
   {
     path: 'home',

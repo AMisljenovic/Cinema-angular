@@ -15,6 +15,11 @@ export class UserService {
     this.url = `${environment.apiUrl}/users`;
   }
 
+
+  loggedInAsAdmin(): Observable<string> {
+    return this.http.get<string>(this.url, {withCredentials: true});
+  }
+
   register(user): Observable<string[]> {
     return this.http.post<string[]>(this.url, user, {withCredentials: true});
   }
