@@ -20,6 +20,7 @@ import { jqxFormModule} from 'jqwidgets-ng/jqxform';
 import { jqxPasswordInputModule } from 'jqwidgets-ng/jqxpasswordinput';
 import { jqxValidatorModule } from 'jqwidgets-ng/jqxvalidator';
 import { jqxChartModule } from 'jqwidgets-ng/jqxchart';
+import { ContactUsComponent } from './modules/components/contact-us/contact-us.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { jqxChartModule } from 'jqwidgets-ng/jqxchart';
     PageNotFoundComponent,
     ServerDownComponent,
     AdministratorPanelComponent,
+    ContactUsComponent,
    ],
   imports: [
     jqxChartModule,

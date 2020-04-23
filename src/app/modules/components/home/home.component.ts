@@ -31,42 +31,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
     '251759f9-a3c5-43d3-9734-39a288f2a461'
   ];
 
-  // public columns: jqwidgets.GridColumn[] = [
-  //   { text: 'Poster', datafield: 'poster', width: 200, cellsrenderer: this.imagerenderer },
-
-  //   { text: 'Year', datafield: 'year', width: 200 },
-
-  //   { text: 'Title', datafield: 'title' }
-  // ];
-
-//   imagerenderer(row, datafield, value) {
-//     return '<img style="margin-left: 5px;" height="200" width="200" src="' + value + '"/>';
-//  }
-
-//   scrollViewSettings: jqwidgets.ScrollViewOptions =
-//     {
-//         width: 800,
-//         height: 700,
-//         buttonsOffset: [0, 0],
-//         slideShow: false,
-//     };
-
-  // gridSettings: jqwidgets.GridOptions =
-  //   {
-  //     theme: 'material-purple',
-  //     width: '800',
-  //     source: this.dataAdapter,
-  //     columns: this.columns,
-  //     pageable: true,
-  //     sortable: true,
-  //     editable: true,
-  //     autoheight: true,
-  //     autorowheight: true,
-  //     altrows: true,
-  //     enabletooltips: true,
-
-  //   };
-
   constructor(private movieService: MovieService,
               private router: Router) { }
 

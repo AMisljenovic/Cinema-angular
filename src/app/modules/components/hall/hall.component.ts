@@ -108,7 +108,8 @@ export class HallComponent implements OnInit, AfterViewChecked {
       this.repertory = repertory;
 
       const playDate = new Date(this.dateNow);
-      playDate.setDate(this.dateNow.getDate() + repertory.day - this.dateNow.getDay());
+      const dateOffset = (repertory.day - this.dateNow.getDay()) === 0 ? 0 : repertory.day + this.dateNow.getDay() - 1;
+      playDate.setDate(this.dateNow.getDate() + dateOffset);
       this.date = playDate.toLocaleDateString();
     });
 

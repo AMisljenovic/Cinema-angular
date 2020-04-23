@@ -1,12 +1,20 @@
 <app-header></app-header>
 <div class="wrapper">
-  <jqxChart #myChart
+  <jqxChart #chart
   [width]="getWidth()" [height]="500"
-  [title]="'U.S. Stock Market Index Performance'"
-  [description]="'NASDAQ Composite compared to S&P 500'"
-  [showLegend]="true" [enableAnimations]="true" [padding]="padding"
+  [title]="'Made reservations in last 7 days'"
+  [description]="'Displays how many reservations was made per day'"
+  [showLegend]="false" [enableAnimations]="true" [padding]="padding"
   [titlePadding]="titlePadding" [source]="dataAdapter" [xAxis]="xAxis"
   [valueAxis]="valueAxis" [seriesGroups]="seriesGroups" [colorScheme]="'scheme04'">
   </jqxChart>
+  <jqxChart #pieChart
+    [width]="getWidth()" [height]="500"
+    [title]="'Today reservations'"
+    [description]="'Number of reserved/available seats'"
+    [showLegend]="false" [enableAnimations]="true" [padding]="padding"
+    [titlePadding]="titlePadding" [source]="pieChartdataAdapter" [showBorderLine]="true"
+    [seriesGroups]="pieChartSeriesGroups" [colorScheme]="'scheme01'">
+</jqxChart>
 </div>
 <app-footer></app-footer>

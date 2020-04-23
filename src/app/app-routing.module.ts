@@ -5,6 +5,7 @@ import { MovieDetailsComponent, SignUpComponent,
   HomeComponent, HallComponent, SignInComponent, AdministratorPanelComponent } from './modules/components';
 import { ProfileComponent } from './modules/components/profile/profile.component';
 import { PageNotFoundComponent } from './modules/components/page-not-found/page-not-found.component';
+import { ContactUsComponent } from './modules/components/contact-us/contact-us.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,10 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent
+  },
+  {
+    path: 'contact-us',
+    component: ContactUsComponent
   },
   {
     path: 'signin',

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
-import { Reservation, UserReservation } from 'src/app/shared/models';
+import { Reservation, UserReservation, ChartData } from 'src/app/shared/models';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,10 @@ export class ReservationService {
 
   constructor(private http: HttpClient) {
     this.url = `${environment.apiUrl}/reservations`;
+  }
+
+  getChartData(): Observable<ChartData[]> {
+    return this.http.get<ChartData[]>(this.url, {withCredentials: true});
   }
 
   getByRepertoryId(repertoryId: string): Observable<number[]> {
