@@ -254,5 +254,4 @@ export class ProfileModalComponent implements OnInit, AfterViewInit {
     this.router.navigateByUrl('signin');
     this.dialogRef.close();
   }
-
 }

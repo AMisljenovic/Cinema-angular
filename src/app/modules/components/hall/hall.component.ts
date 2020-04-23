@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, AfterViewChecked } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { HallService, UserService, RepertoryService, ReservationService } from 'src/app/core/services';
+import { HallService, RepertoryService, ReservationService } from 'src/app/core/services';
 import {  Hall, SeatPosition, Repertory, Reservation, User } from 'src/app/shared/models';
-import { catchError, map } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ModalComponent } from '../modal/modal.component';

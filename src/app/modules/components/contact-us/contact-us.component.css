@@ -2,3 +2,32 @@
   display: flex;
   flex-direction: column;
 }
+
+.ribbon {
+  margin-top: 8%;
+  width: 100%;
+  height: 70px;
+  background-color: #FFC700;
+  display: flex;
+  flex-direction: column;
+}
+
+.ribbon span {
+  color: #c9c9c9;
+  font-size: 60px;
+  margin-left: 10%;
+}
+
+h2 {
+  color: #FFC700;
+  -webkit-text-stroke-color: black;
+  -webkit-text-stroke-width: thin;
+  margin-left: 3%;
+  font-size: 40px;
+}
+
+pre {
+  font-size: 24px;
+  -webkit-text-stroke-color: black;
+  -webkit-text-stroke-width: thin;
+}

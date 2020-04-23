@@ -1,4 +1,4 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { jqxFormComponent } from 'jqwidgets-ng/jqxform';
 import { jqxValidatorComponent } from 'jqwidgets-ng/jqxvalidator';
 import { UserService } from 'src/app/core/services';
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
-export class SignUpComponent implements AfterViewInit {
+export class SignUpComponent implements AfterViewInit, AfterViewChecked {
   @ViewChild('form', {static: false}) jqxForm: jqxFormComponent;
   @ViewChild('validator', { static: false }) jqxValidator: jqxValidatorComponent;
   emailInUse = false;
@@ -181,6 +181,11 @@ export class SignUpComponent implements AfterViewInit {
         rule: 'email',
       }
     ]);
+  }
+
+  ngAfterViewChecked() {
+    const password = document.querySelector('#el_3') as HTMLInputElement;
+    password.placeholder = '';
   }
 
   containsSpecialCharacters(input: any, commit: any): any {

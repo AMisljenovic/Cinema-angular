@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ChartData } from 'src/app/shared/models';
 import { ReservationService } from 'src/app/core/services';
 import { jqxChartComponent } from 'jqwidgets-ng/jqxchart/public_api';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';

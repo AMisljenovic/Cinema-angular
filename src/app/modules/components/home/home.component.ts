@@ -77,8 +77,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
  selectMovie(event: any) {
   const imageTagId = event.currentTarget.id;
-
-  // const route = this.router.config.find(r => r.path === 'movie-details/:id');
   let movieId = '';
 
   if (imageTagId.includes('playing')) {

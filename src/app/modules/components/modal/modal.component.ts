@@ -30,5 +30,4 @@ export class ModalComponent implements OnInit {
   closeModal() {
     this.dialogRef.close(this.seatsReserved);
   }
-
 }

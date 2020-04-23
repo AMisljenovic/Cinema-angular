@@ -26,6 +26,4 @@ export class RepertoryService {
 
     return this.http.get<Repertory>(url);
   }
-
-
 }

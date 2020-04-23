@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit, AfterViewChecked } from '@angular/core';
 import { UserService } from 'src/app/core/services';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -11,7 +11,7 @@ import { jqxPasswordInputComponent } from 'jqwidgets-ng/jqxpasswordinput';
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.css']
 })
-export class SignInComponent implements OnInit {
+export class SignInComponent implements OnInit, AfterViewChecked {
   @ViewChild('emailUsername', {static: false}) emailUsername: jqxInputComponent;
   @ViewChild('password', {static: false}) password: jqxPasswordInputComponent;
 
@@ -27,6 +27,12 @@ export class SignInComponent implements OnInit {
       this.router.navigateByUrl('home');
     }
   }
+
+  ngAfterViewChecked() {
+    this.password.placeHolder('');
+    this.emailUsername.placeHolder('');
+  }
+
 
   login() {
     const emailUsername = this.emailUsername.val();
@@ -57,7 +63,5 @@ export class SignInComponent implements OnInit {
       sessionStorage.setItem('user', JSON.stringify(res));
       this.router.navigateByUrl('home');
     });
-
-
   }
 }

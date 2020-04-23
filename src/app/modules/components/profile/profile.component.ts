@@ -76,6 +76,8 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
   }
 
   ngAfterViewChecked() {
+    this.jqxPassword.placeHolder('');
+
     if (!this.dataLoaded && this.reservations.length !== 0) {
       this.source.localdata = this.reservations;
       this.dataAdapter = new jqx.dataAdapter(this.source);
@@ -206,5 +208,4 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
         return res;
       }));
   }
-
 }

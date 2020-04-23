@@ -155,8 +155,6 @@ export class MovieDetailsComponent implements OnInit, AfterViewChecked {
     }
 
     this.day = event.args.rowindex;
-    // const playDate = new Date(this.dateNow);
-    // playDate.setDate(this.dateNow.getDate() + event.args.rowindex);
     this.playTime = this.jqxGrid.getcelltext(event.args.rowindex, event.args.datafield).split(' ')[0];
   }
 
