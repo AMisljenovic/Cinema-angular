@@ -19,7 +19,7 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
   @ViewChild('jqxPassword', {static: false}) jqxPassword: jqxPasswordInputComponent;
   @ViewChild('grid', {static: false}) jqxGrid: jqxGridComponent;
 
-  user: User;
+  user = new User();
   isServerDown = false;
   ConfrimDeletion = false;
   wrongPassword = false;
@@ -64,18 +64,16 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
         return of(err);
       })
       )
-      .subscribe(_ => {});
+      .subscribe(_ => {
+        this.user = JSON.parse(sessionStorage.getItem('user'));
+        if (this.user === null) {
+          alert('You must be signed in to access this page');
+          this.router.navigateByUrl('signin');
+        }
 
-    this.user = JSON.parse(sessionStorage.getItem('user'));
-    if (this.user === null) {
-      alert('You must be signed in to access this page');
-      this.router.navigateByUrl('signin');
-    }
-
-    this.getReservations();
+        this.getReservations();
+      });
   }
-
-
 
   ngAfterViewChecked() {
     if (!this.dataLoaded && this.reservations.length !== 0) {

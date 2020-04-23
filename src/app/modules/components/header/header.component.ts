@@ -18,18 +18,19 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.isUserLoggedIn = sessionStorage.getItem('user') !== null;
-
-    this.userService.loggedInAsAdmin()
-    .pipe(
-      catchError(err => {
-        if (err && err.status === 200) {
-          this.signedInAsAdmin = true;
-        }
-        return of('ok');
-      })
-    )
-    .subscribe(res => {
-    });
+    if (this.isUserLoggedIn) {
+      this.userService.loggedInAsAdmin()
+      .pipe(
+        catchError(err => {
+          if (err && err.status === 200) {
+            this.signedInAsAdmin = true;
+          }
+          return of('ok');
+        })
+      )
+      .subscribe(res => {
+      });
+    }
   }
 
   signout() {
