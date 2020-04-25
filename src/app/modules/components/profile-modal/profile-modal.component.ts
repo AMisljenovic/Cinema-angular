@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Inject, AfterViewInit, ViewChild, AfterViewChecked } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UserService } from 'src/app/core/services';
 import { jqxFormComponent } from 'jqwidgets-ng/jqxform/public_api';
@@ -12,7 +12,7 @@ import { catchError } from 'rxjs/operators';
   templateUrl: './profile-modal.component.html',
   styleUrls: ['./profile-modal.component.css']
 })
-export class ProfileModalComponent implements OnInit, AfterViewInit {
+export class ProfileModalComponent implements OnInit, AfterViewInit, AfterViewChecked {
   @ViewChild('form', {static: false}) jqxForm: jqxFormComponent;
   @ViewChild('validator', { static: false }) jqxValidator: jqxValidatorComponent;
   emailInUse = false;
@@ -120,6 +120,14 @@ export class ProfileModalComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.values = this.modalData;
   }
+
+  ngAfterViewChecked() {
+    const newPassword = document.querySelector('#el_2') as HTMLInputElement;
+    newPassword.placeholder = '';
+    const oldPassword = document.querySelector('#el_3') as HTMLInputElement;
+    oldPassword.placeholder = '';
+  }
+
 
   ngAfterViewInit() {
     this.jqxValidator.onValidationSuccess
