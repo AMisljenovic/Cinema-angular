@@ -64,4 +64,8 @@ export class SignInComponent implements OnInit, AfterViewChecked {
       this.router.navigateByUrl('home');
     });
   }
+
+  redirect(route) {
+    this.router.navigateByUrl(route);
+  }
 }

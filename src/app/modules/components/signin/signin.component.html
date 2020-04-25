@@ -1,7 +1,7 @@
 <app-header></app-header>
 <div *ngIf="!isServerDown" class="wrapper">
   <div class="new-user">
-    <h2>New here? <a href="/signup">Sign up</a></h2>
+    <h2>New here? <a (click)="redirect('signup')">Sign up</a></h2>
   </div>
   <div>
     <h2>Username or email</h2>

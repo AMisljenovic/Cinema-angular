@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/jqwidgets-angular-cli-app",
+            "outputPath": "dist/cinemate-angular",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -37,8 +37,8 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "baseHref" : "/jqwidgets-angular-cli-app",
-              "deployUrl" : "/jqwidgets-angular-cli-app",
+              "baseHref" : "/cinemate-angular/",
+              "deployUrl" : "/cinemate-angular/",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -51,12 +51,12 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
+                  "maximumWarning": "4mb",
+                  "maximumError": "8mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "150kb",
+                  "maximumWarning": "180kb",
                   "maximumError": "200kb"
                 }
               ]

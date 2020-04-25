@@ -25,7 +25,7 @@ export class MovieDetailsComponent implements OnInit, AfterViewChecked {
   day: number;
   offset: number;
   isMoviePlaying: boolean;
-  selectedMovie: Movie;
+  selectedMovie: Movie = new Movie();
   repertoires: Repertory[];
   dateNow = new Date();
 

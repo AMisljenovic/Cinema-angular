@@ -17,14 +17,14 @@ import { jqxButtonComponent } from 'jqwidgets-ng/jqxbuttons';
 export class HallComponent implements OnInit, AfterViewChecked {
   @ViewChild('repertoryGrid', {static: false}) jqxGrid: jqxGridComponent;
   @ViewChild('jqxButton', { static: false }) jqxButton: jqxButtonComponent;
-  private seatImageUrl = '../../../../assets/seat.png';
+  private seatImageUrl = 'assets/seat.png';
   private repertoryIdParamName = 'repertoryId';
   private hallIdParamName = 'hallId';
   private repertoryId = '';
   private jqxGridPagerDisabled = false;
   private jqxGridOneTime = true;
   private cellsRendered = true;
-  private reservationLimit = false;
+  reservationLimit = false;
   isHallIdValid = true;
   isRepertoryIdValid = true;
   isServerDown = false;
@@ -117,9 +117,7 @@ export class HallComponent implements OnInit, AfterViewChecked {
     .pipe
     (
       catchError(err => {
-        if (err && err.status === 401) {
-          this.redirectToLogin();
-        } else if (err && (err.status === 0 || err.status === 500)) {
+        if (err && (err.status === 0 || err.status === 500)) {
           this.isServerDown = true;
         }
         return of(err);

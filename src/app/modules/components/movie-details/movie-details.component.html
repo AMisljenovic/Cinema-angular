@@ -8,7 +8,7 @@
 
   <div class="plot">
     <div class="image-plot">
-      <img class="poster" src='../../../../assets/{{selectedMovie.id}}.jpg'>
+      <img class="poster" src='assets/{{selectedMovie.id}}.jpg'>
       <h2 class="plot-header">Plot</h2>
       <p class="plot-text">{{selectedMovie.plot}}</p>
       <h2 class="plot-header">Director</h2>
@@ -20,7 +20,6 @@
       <h1 class="buy-tickets">Reserve tickets online</h1>
       <jqxGrid #repertoryGrid id="jqx-grid"
       [source]="dataAdapter" [columns]="columns" [showstatusbar]="true"
-      [columngroups]="columngroups"
       [autoheight]="true"
       [editable]="false"
       [selectionmode]="'singlecell'"

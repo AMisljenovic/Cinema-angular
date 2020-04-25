@@ -57,19 +57,19 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
       const posters = document.getElementsByClassName('photo');
       for (let index = 0; index < posters.length; index++) {
-        (posters[index] as HTMLElement).style.backgroundImage = `url(../../../../assets/wide-${this.movieIds[index]}.jpg)`;
+        (posters[index] as HTMLElement).style.backgroundImage = `url(assets/wide-${this.movieIds[index]}.jpg)`;
       }
 
       const nowPlayingPosters = document.getElementsByClassName('all-movies-poster');
 
       for (let index = 0; index < nowPlayingPosters.length; index++) {
-        (nowPlayingPosters[index] as HTMLImageElement).src = `../../../../assets/${this.playingMovies[index].id}.jpg`;
+        (nowPlayingPosters[index] as HTMLImageElement).src = `assets/${this.playingMovies[index].id}.jpg`;
       }
 
       const comingSoonPosters = document.getElementsByClassName('all-movies-poster-coming');
 
       for (let index = 0; index < nowPlayingPosters.length; index++) {
-        (comingSoonPosters[index] as HTMLImageElement).src = `../../../../assets/${this.announcedMovies[index].id}.jpg`;
+        (comingSoonPosters[index] as HTMLImageElement).src = `assets/${this.announcedMovies[index].id}.jpg`;
       }
 
     });

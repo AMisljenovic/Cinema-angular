@@ -24,3 +24,9 @@ h2 {
 h4 {
   color: red
 }
+
+.new-user h2 {
+  text-decoration: underline;
+  color: purple;
+  cursor: pointer;
+}

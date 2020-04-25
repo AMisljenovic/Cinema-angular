@@ -15,7 +15,7 @@
     </div>
     <div class="button">
       <jqxButton #jqxButton
-        [roundedCorners]="all" [disabled]="seatPosition.length === 0"
+        [roundedCorners]="'all'" [disabled]="seatPosition.length === 0"
         [template]="'inverse'"
         [width]='200'
         [height]='56'
@@ -26,7 +26,7 @@
     </div>
   </div>
   <div class="hall">
-    <img class="projector" src="../../../../assets/project-screen.png" alt="">
+    <img class="projector" src="assets/project-screen.png" alt="">
     <jqxGrid #repertoryGrid id="jqx-grid"
       [source]="dataAdapter" [columns]="columns" [showstatusbar]="true" [rowsheight]="110"
       [autoheight]="true"

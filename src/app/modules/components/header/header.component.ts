@@ -41,4 +41,8 @@ export class HeaderComponent implements OnInit {
       this.router.navigateByUrl('home');
     });
   }
+
+  redirect(route) {
+    this.router.navigateByUrl(route);
+  }
 }

@@ -217,7 +217,7 @@ export class SignUpComponent implements AfterViewInit, AfterViewChecked {
           this.usernameInUse = false;
           this.emailInUse = false;
           alert('Successfully registered! You will be redirected to the login page');
-          this.router.navigateByUrl('login');
+          this.router.navigateByUrl('signin');
         }
       });
   }

@@ -1,15 +1,15 @@
 <nav class="navbar fixed-top navbar-dark bg-dark">
-  <a href="#">
+  <a (click)="redirect('home')">
     <img src="assets/Logo.png">
   </a>
   <div  class="navbar">
 
-    <a class="nav-link" *ngIf="signedInAsAdmin" href="/admin-panel">Admin Panel</a>
-    <a class="nav-link" href="/home">Home</a>
-    <a class="nav-link" href="/contact-us">Contact Us</a>
-    <a class="nav-link" *ngIf="!isUserLoggedIn" href="/signin">Sign In</a>
-    <a class="nav-link" *ngIf="!isUserLoggedIn" href="/signup">Sign Up</a>
-    <a class="nav-link" *ngIf="isUserLoggedIn" href="/profile">My Profile</a>
-    <a class="nav-link" *ngIf="isUserLoggedIn" (click)="signout()">Sign Out</a>
+    <a class="nav-link" *ngIf="signedInAsAdmin" (click)="redirect('admin-panel')">Admin Panel</a>
+    <a class="nav-link" (click)="redirect('home')">Home</a>
+    <a class="nav-link" (click)="redirect('contact-us')">Contact Us</a>
+    <a class="nav-link" *ngIf="!isUserLoggedIn" (click)="redirect('signin')">Sign In</a>
+    <a class="nav-link" *ngIf="!isUserLoggedIn" (click)="redirect('signup')">Sign Up</a>
+    <a class="nav-link" *ngIf="isUserLoggedIn"  (click)="redirect('profile')">My Profile</a>
+    <a class="nav-link" *ngIf="isUserLoggedIn"  (click)="signout()">Sign Out</a>
   </div>
 </nav>
