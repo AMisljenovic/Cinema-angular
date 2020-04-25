@@ -29,7 +29,6 @@ export class HallComponent implements OnInit, AfterViewChecked {
   isRepertoryIdValid = true;
   isServerDown = false;
   date: string;
-  dateNow = new Date();
   columnPropNames: string[] = [];
   seats: number[];
   user: User;
@@ -106,11 +105,7 @@ export class HallComponent implements OnInit, AfterViewChecked {
         return;
       }
       this.repertory = repertory;
-
-      const playDate = new Date(this.dateNow);
-      const dateOffset = (repertory.day - this.dateNow.getDay()) === 0 ? 0 : repertory.day + this.dateNow.getDay() - 1;
-      playDate.setDate(this.dateNow.getDate() + dateOffset);
-      this.date = playDate.toLocaleDateString();
+      this.date = repertory.date;
     });
 
     this.reservationService.getByRepertoryId(this.repertoryId)
@@ -119,6 +114,10 @@ export class HallComponent implements OnInit, AfterViewChecked {
       catchError(err => {
         if (err && (err.status === 0 || err.status === 500)) {
           this.isServerDown = true;
+        }
+
+        if (err && err.status === 401) {
+          this.redirectToLogin();
         }
         return of(err);
       })
