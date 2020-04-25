@@ -1,7 +1,6 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  height: 100%;
 }
 
 .profile-data {
@@ -26,6 +25,15 @@
 
 .delete-reservations {
   margin-left: 10%;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.wrapper h2 {
+  color: #FFC700;
+  -webkit-text-stroke-color: black;
+  -webkit-text-stroke-width: thin;
   align-self: center;
 }
 
@@ -55,6 +63,7 @@ jqxPasswordInput {
   margin-left: 3%;
   display: flex;
   flex-direction: row;
+  height: 500px;
 }
 
 h3 {

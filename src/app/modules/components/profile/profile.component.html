@@ -19,6 +19,7 @@
       </div>
     </div>
   </div>
+  <h2 *ngIf="!areReservationsLoaded">Please wait until reservations are loaded</h2>
   <div class="reservations">
     <div class="table">
       <jqxGrid #grid (onRowselect)="gridOnRowSelect($event)" (onRowunselect)="gridOnRowUnselect($event)"

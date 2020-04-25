@@ -20,6 +20,7 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
   @ViewChild('grid', {static: false}) jqxGrid: jqxGridComponent;
 
   user = new User();
+  areReservationsLoaded = false;
   isServerDown = false;
   ConfrimDeletion = false;
   wrongPassword = false;
@@ -197,7 +198,8 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
 
         return of(err);
       }))
-    .subscribe(reservations => this.reservations = reservations
+    .subscribe(reservations => {
+      this.reservations = reservations
       .sort((a, b) => {
         const dateA = (new Date(a.dateTime)).getTime();
         const dateB = (new Date(b.dateTime)).getTime();
@@ -208,6 +210,9 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
       .map(res => {
         res.price += ' din.';
         return res;
-      }));
+      });
+
+      this.areReservationsLoaded = true;
+    });
   }
 }
