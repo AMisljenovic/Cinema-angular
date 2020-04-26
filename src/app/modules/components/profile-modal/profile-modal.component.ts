@@ -3,9 +3,9 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UserService } from 'src/app/core/services';
 import { jqxFormComponent } from 'jqwidgets-ng/jqxform/public_api';
 import { jqxValidatorComponent } from 'jqwidgets-ng/jqxvalidator/public_api';
-import { Router } from '@angular/router';
+import { Router, RouterEvent } from '@angular/router';
 import { of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-profile-modal',
@@ -19,6 +19,7 @@ export class ProfileModalComponent implements OnInit, AfterViewInit, AfterViewCh
   wrongPassword = false;
   profileIsntUpdated = false;
   isServerDown = false;
+  validatonError = false;
 
   columns: Array<jqwidgets.FormTemplateItem> = [
     {
@@ -114,7 +115,13 @@ export class ProfileModalComponent implements OnInit, AfterViewInit, AfterViewCh
   constructor(private userService: UserService,
               private router: Router,
               public dialogRef: MatDialogRef<ProfileModalComponent>,
-              @Inject(MAT_DIALOG_DATA) private modalData: any) { }
+              @Inject(MAT_DIALOG_DATA) private modalData: any) {
+                router.events.pipe(
+                  filter(e => e instanceof RouterEvent)
+                ).subscribe(e => {
+                  dialogRef.close();
+                });
+              }
 
 
   ngOnInit() {
@@ -132,8 +139,15 @@ export class ProfileModalComponent implements OnInit, AfterViewInit, AfterViewCh
   ngAfterViewInit() {
     this.jqxValidator.onValidationSuccess
     .subscribe(event => {
+      this.validatonError = false;
       this.register();
     });
+
+    this.jqxValidator.onValidationError
+    .subscribe(event => {
+      this.validatonError = true;
+    });
+
 
     this.jqxForm.onFormDataChange
     .subscribe(change => {

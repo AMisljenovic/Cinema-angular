@@ -17,6 +17,7 @@ export class SignUpComponent implements AfterViewInit, AfterViewChecked {
   emailInUse = false;
   usernameInUse = false;
   isServerDown = false;
+  validatonError = false;
 
   columns: Array<jqwidgets.FormTemplateItem> = [
     {
@@ -108,6 +109,11 @@ export class SignUpComponent implements AfterViewInit, AfterViewChecked {
     this.jqxValidator.onValidationSuccess
     .subscribe(event => {
       this.register();
+    });
+
+    this.jqxValidator.onValidationError
+    .subscribe(event => {
+      this.validatonError = true;
     });
 
     this.jqxForm.onFormDataChange

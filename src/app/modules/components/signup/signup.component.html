@@ -14,6 +14,7 @@
   <div class="in-use">
     <h3 *ngIf="usernameInUse">Username already in use</h3>
     <h3 *ngIf="emailInUse">Email already in use</h3>
+    <h3 *ngIf="validatonError">Please input values as required</h3>
   </div>
 </div>
 <app-server-down *ngIf="isServerDown"></app-server-down>

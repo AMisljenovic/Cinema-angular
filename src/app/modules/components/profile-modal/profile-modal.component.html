@@ -14,6 +14,7 @@
     <h3 *ngIf="emailInUse">Email already in use</h3>
     <h3 *ngIf="wrongPassword">Old password doesn't match</h3>
     <h3 *ngIf="profileIsntUpdated">You haven't changed any profile field</h3>
+    <h3 *ngIf="validatonError">Please input values as required</h3>
   </div>
 </div>
 <div *ngIf="isServerDown" class="server-down">
