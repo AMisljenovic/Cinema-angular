@@ -116,9 +116,6 @@ export class HallComponent implements OnInit, AfterViewChecked {
           this.isServerDown = true;
         }
 
-        if (err && err.status === 401) {
-          this.redirectToLogin();
-        }
         return of(err);
       })
     )
