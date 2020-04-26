@@ -119,6 +119,7 @@ export class MovieDetailsComponent implements OnInit, AfterViewChecked {
     const sourceData = [];
 
     this.offset = this.dateNow.getDay() - 1;
+    this.offset = this.offset === -1 ? 6 : this.offset;
 
     for (let index = 0; index < 7; index++) {
       const nextday = new Date(this.dateNow);
