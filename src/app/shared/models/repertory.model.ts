@@ -1,6 +1,6 @@
 export class Repertory {
   public id: string;
-  public moveId: string;
+  public movieId: string;
   public hallId: string;
   public playTime: string;
   public date: string;
