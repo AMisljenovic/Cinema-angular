@@ -120,6 +120,7 @@ export class ProfileModalComponent implements OnInit, AfterViewInit, AfterViewCh
                   filter(e => e instanceof RouterEvent)
                 ).subscribe(e => {
                   dialogRef.close();
+                  this.jqxValidator.hide();
                 });
               }
 
@@ -268,6 +269,7 @@ export class ProfileModalComponent implements OnInit, AfterViewInit, AfterViewCh
   }
 
   closeModal() {
+    this.jqxValidator.hide();
     this.dialogRef.close();
   }
 

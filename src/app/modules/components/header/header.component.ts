@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { UserService } from 'src/app/core/services';
 import { Router } from '@angular/router';
 import { catchError } from 'rxjs/operators';
@@ -11,6 +11,7 @@ import { of } from 'rxjs';
 })
 export class HeaderComponent implements OnInit {
 
+  @Output() navigate: EventEmitter<any> = new EventEmitter();
   isUserLoggedIn = false;
   signedInAsAdmin = false;
 
@@ -44,5 +45,6 @@ export class HeaderComponent implements OnInit {
 
   redirect(route) {
     this.router.navigateByUrl(route);
+    this.navigate.emit();
   }
 }

@@ -1,4 +1,4 @@
-<app-header></app-header>
+<app-header (navigate)="pageRedirection()"></app-header>
 <div *ngIf="!isServerDown" class="wrapper">
   <div class="form">
     <h1>Sign Up</h1>

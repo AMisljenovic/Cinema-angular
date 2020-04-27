@@ -227,4 +227,8 @@ export class SignUpComponent implements AfterViewInit, AfterViewChecked {
         }
       });
   }
+
+  pageRedirection() {
+    this.jqxValidator.hide();
+  }
 }
