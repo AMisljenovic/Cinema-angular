@@ -76,7 +76,7 @@ export class ProfileModalComponent implements OnInit, AfterViewInit, AfterViewCh
       bind: 'password',
       type: 'password',
       name: 'oldPassword',
-      label: 'Old Password',
+      label: 'Password',
       required: true,
       labelWidth: '115px',
       width: '250px',
