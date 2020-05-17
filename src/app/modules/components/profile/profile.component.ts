@@ -16,8 +16,9 @@ import { jqxGridComponent } from 'jqwidgets-ng/jqxgrid/public_api';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit, AfterViewChecked {
-  @ViewChild('jqxPassword', {static: false}) jqxPassword: jqxPasswordInputComponent;
-  @ViewChild('grid', {static: false}) jqxGrid: jqxGridComponent;
+  @ViewChild('jqxPassword', { static: false })
+  jqxPassword: jqxPasswordInputComponent;
+  @ViewChild('grid', { static: false }) jqxGrid: jqxGridComponent;
 
   user = new User();
   areReservationsLoaded = false;
@@ -31,39 +32,41 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
     {
       localdata: [],
       datatype: 'array',
-      datafields:
-      [
+      datafields: [
         { name: 'movieTitle', type: 'string' },
         { name: 'dateTime', type: 'string' },
         { name: 'row', type: 'string' },
         { name: 'column', type: 'string' },
-        { name: 'price', type: 'string' },
+        { name: 'price', type: 'string' }
       ]
     }
   ];
   dataAdapter: any;
 
   public columns: jqwidgets.GridColumn[] = [
-    { text: 'Movie Title', datafield: 'movieTitle', width: '250'},
-    { text: 'Date Time', datafield: 'dateTime', width: '160'},
-    { text: 'Row', datafield: 'row'},
-    { text: 'Column', datafield: 'column'},
-    { text: 'Price', datafield: 'price'},
+    { text: 'Movie Title', datafield: 'movieTitle', width: '250' },
+    { text: 'Date Time', datafield: 'dateTime', width: '160' },
+    { text: 'Row', datafield: 'row' },
+    { text: 'Column', datafield: 'column' },
+    { text: 'Price', datafield: 'price' }
   ];
 
-  constructor(private router: Router,
-              private userService: UserService,
-              private reservationService: ReservationService,
-              private healthService: HealthService,
-              public matDialog: MatDialog) { }
+  constructor(
+    private router: Router,
+    private userService: UserService,
+    private reservationService: ReservationService,
+    private healthService: HealthService,
+    public matDialog: MatDialog
+  ) {}
 
   ngOnInit() {
-    this.healthService.checkHealth()
-    .pipe(
-      catchError(err => {
-        this.serverDown(err);
-        return of(err);
-      })
+    this.healthService
+      .checkHealth()
+      .pipe(
+        catchError(err => {
+          this.serverDown(err);
+          return of(err);
+        })
       )
       .subscribe(_ => {
         this.user = JSON.parse(sessionStorage.getItem('user'));
@@ -106,37 +109,40 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
 
   confirm() {
     const password = this.jqxPassword.val();
-    const deletionRequest = {username: this.user.username, email: this.user.email, password};
+    const deletionRequest = {
+      username: this.user.username,
+      email: this.user.email,
+      password
+    };
 
-    this.userService.delete(deletionRequest)
-    .pipe(
-      catchError(err => {
-        if (err && err.status === 401) {
-          this.wrongPassword = true;
+    this.userService
+      .delete(deletionRequest)
+      .pipe(
+        catchError(err => {
+          if (err && err.status === 401) {
+            this.wrongPassword = true;
+          }
+          this.serverDown(err);
+
+          return of(err);
+        })
+      )
+      .subscribe(res => {
+        if (res && res.status === 200) {
+          this.wrongPassword = false;
+          alert('Your account has been successfully deleted.');
+          sessionStorage.removeItem('user');
+          this.router.navigateByUrl('home');
         }
-        this.serverDown(err);
-
-        return of(err);
-      })
-    )
-    .subscribe(res => {
-      if (res && res.status === 200) {
-        this.wrongPassword = false;
-        alert('Your account has been successfully deleted.');
-        sessionStorage.removeItem('user');
-        this.router.navigateByUrl('home');
-      }
-    });
+      });
   }
 
   gridOnRowSelect(event) {
-
     const rowData = this.jqxGrid.getrowdata(event.args.rowindex);
     this.reservationsToRemove.push(rowData);
   }
 
   gridOnRowUnselect(event) {
-
     const rowData = this.jqxGrid.getrowdata(event.args.rowindex);
     const index = this.reservationsToRemove.findIndex(res => {
       return res.reservationId === rowData.reservationId;
@@ -148,10 +154,13 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
   }
 
   deleteReservations() {
-    const reservationIds = this.reservationsToRemove.map(res => res.reservationId);
+    const reservationIds = this.reservationsToRemove.map(
+      res => res.reservationId
+    );
 
-    this.reservationService.deleteByIds(reservationIds)
-    .pipe(
+    this.reservationService
+      .deleteByIds(reservationIds)
+      .pipe(
         catchError(err => {
           if (err && err.status === 401) {
             this.redirectToLogin();
@@ -161,13 +170,13 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
           return of(err);
         })
       )
-    .subscribe(response => {
-      if (response === null) {
-        this.getReservations();
-        this.clearGrid();
-        alert('Reservations successfully removed');
-      }
-    });
+      .subscribe(response => {
+        if (response === null) {
+          this.getReservations();
+          this.clearGrid();
+          alert('Reservation(s) successfully removed');
+        }
+      });
   }
 
   serverDown(err) {
@@ -177,7 +186,9 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
   }
 
   redirectToLogin() {
-    alert('You are not authorized to access this page. You will be redirected to sign in page');
+    alert(
+      'You are not authorized to access this page. You will be redirected to sign in page'
+    );
     sessionStorage.removeItem('user');
     this.router.navigateByUrl('signin');
   }
@@ -189,30 +200,32 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
   }
 
   getReservations() {
-    this.reservationService.getByUserId(this.user.id)
-    .pipe(
-      catchError(err => {
-        if (err && err.status === 401) {
-          this.redirectToLogin();
-        }
+    this.reservationService
+      .getByUserId(this.user.id)
+      .pipe(
+        catchError(err => {
+          if (err && err.status === 401) {
+            this.redirectToLogin();
+          }
 
-        return of(err);
-      }))
-    .subscribe(reservations => {
-      this.reservations = reservations
-      .sort((a, b) => {
-        const dateA = (new Date(a.dateTime)).getTime();
-        const dateB = (new Date(b.dateTime)).getTime();
+          return of(err);
+        })
+      )
+      .subscribe(reservations => {
+        this.reservations = reservations
+          .sort((a, b) => {
+            const dateA = new Date(a.dateTime).getTime();
+            const dateB = new Date(b.dateTime).getTime();
 
-        return dateA - dateB;
-      })
-      .sort((a, b) => a.time > b.time)
-      .map(res => {
-        res.price += ' din.';
-        return res;
+            return dateA - dateB;
+          })
+          .sort((a, b) => a.time > b.time)
+          .map(res => {
+            res.price += ' din.';
+            return res;
+          });
+
+        this.areReservationsLoaded = true;
       });
-
-      this.areReservationsLoaded = true;
-    });
   }
 }
