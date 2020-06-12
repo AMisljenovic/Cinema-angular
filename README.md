@@ -1,15 +1,21 @@
 # Cienma-angular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.17.
+**Make sure you have the latest version of [Node](https://nodejs.org/en/) on your machine**.
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+### `npm install`
 
-## Build
+Clone repostiory and run `npm install` to get required node modules.
+
+### `ng serve`
+
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`.
+
+### `ng build`
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
 ## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `npm run test` to execute the unit tests.
