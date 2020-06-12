@@ -11,7 +11,7 @@ Clone repostiory and run `npm install` to get required node modules.
 ### `Making requests to Cinema.WebApi`
 
 Before running client make sure you have server side of cinema app running, and check for url of server 
-to match .env file API_URL variable.
+to match enviorment.ts file apiUrl variable.
 
 ### `ng serve`
 
