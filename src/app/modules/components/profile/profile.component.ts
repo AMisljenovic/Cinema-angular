@@ -80,10 +80,6 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
   }
 
   ngAfterViewChecked() {
-    if (this.jqxPassword) {
-      this.jqxPassword.placeHolder('');
-    }
-
     if (!this.dataLoaded && this.reservations.length !== 0) {
       this.source.localdata = this.reservations;
       this.dataAdapter = new jqx.dataAdapter(this.source);

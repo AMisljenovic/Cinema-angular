@@ -11,7 +11,7 @@ import { jqxPasswordInputComponent } from 'jqwidgets-ng/jqxpasswordinput';
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.css']
 })
-export class SignInComponent implements OnInit, AfterViewChecked {
+export class SignInComponent implements OnInit {
   @ViewChild('emailUsername', {static: false}) emailUsername: jqxInputComponent;
   @ViewChild('password', {static: false}) password: jqxPasswordInputComponent;
 
@@ -27,12 +27,6 @@ export class SignInComponent implements OnInit, AfterViewChecked {
       this.router.navigateByUrl('home');
     }
   }
-
-  ngAfterViewChecked() {
-    this.password.placeHolder('');
-    this.emailUsername.placeHolder('');
-  }
-
 
   login() {
     const emailUsername = this.emailUsername.val();

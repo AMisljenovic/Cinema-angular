@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://localhost/web/api',
+  apiUrl: 'https://cinemate.azurewebsites.net/api',
+  // apiUrl: 'https://localhost:44361/api'
 };
 
 /*
