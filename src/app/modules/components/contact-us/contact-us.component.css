@@ -31,3 +31,7 @@ pre {
   -webkit-text-stroke-color: black;
   -webkit-text-stroke-width: thin;
 }
+
+.contact-us {
+  -webkit-text-fill-color: black;
+}

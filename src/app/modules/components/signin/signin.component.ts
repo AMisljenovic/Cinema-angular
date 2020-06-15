@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit, AfterViewChecked } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { UserService } from 'src/app/core/services';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
