@@ -268,10 +268,6 @@ export class HallComponent implements OnInit, AfterViewChecked {
         });
     });
 
-    this.seatPosition.forEach(seat =>  {
-      this.jqxGrid.unselectcell(seat.row, this.columns[seat.column].datafield);
-    });
-
     this.reservationService.postReservations(reservations)
     .pipe(
       catchError(err => {
@@ -299,6 +295,13 @@ export class HallComponent implements OnInit, AfterViewChecked {
         this.renderSeats();
       });
     });
+
+    const unselectCell = [];
+
+    this.seatPosition.forEach(seat => unselectCell.push({row: seat.row, column: this.columns[seat.column].datafield}));
+
+    unselectCell.forEach(cell => this.jqxGrid.unselectcell(cell.row, cell.column));
+
   }
 
   private renderSeats() {
