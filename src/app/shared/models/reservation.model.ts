@@ -5,4 +5,5 @@ export class Reservation {
   public seatRow: number;
   public seatColumn: number;
   public date: string;
+  public playTime: string;
 }

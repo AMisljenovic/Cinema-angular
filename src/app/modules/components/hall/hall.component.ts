@@ -28,7 +28,6 @@ export class HallComponent implements OnInit, AfterViewChecked {
   isHallIdValid = true;
   isRepertoryIdValid = true;
   isServerDown = false;
-  date: string;
   columnPropNames: string[] = [];
   seats: number[];
   user: User;
@@ -105,7 +104,6 @@ export class HallComponent implements OnInit, AfterViewChecked {
         return;
       }
       this.repertory = repertory;
-      this.date = repertory.date;
     });
 
     this.reservationService.getByRepertoryId(this.repertoryId)
@@ -264,7 +262,8 @@ export class HallComponent implements OnInit, AfterViewChecked {
           seatRow: seat.row,
           seatColumn: seat.column,
           userId: this.user.id,
-          date: this.date
+          date: this.repertory.date,
+          playTime: this.repertory.playTime
         });
     });
 
@@ -275,6 +274,9 @@ export class HallComponent implements OnInit, AfterViewChecked {
           this.sessionExpired();
 
           return of(err);
+        }
+        if (err && err.status === 400) {
+          alert(err.error);
         }
       })
     )
