@@ -13,7 +13,7 @@ import { catchError } from 'rxjs/operators';
   templateUrl: './movie-details.component.html',
   styleUrls: ['./movie-details.component.css']
 })
-export class MovieDetailsComponent implements OnInit, AfterViewChecked {
+export class MovieDetailsComponent implements OnInit {
   @ViewChild('jqxLoader', { static: false }) jqxLoader: jqxLoaderComponent;
   @ViewChild('repertoryGrid', {static: false}) jqxGrid: jqxGridComponent;
   @ViewChild('jqxButton', { static: false }) jqxButton: jqxButtonComponent;
@@ -80,15 +80,6 @@ export class MovieDetailsComponent implements OnInit, AfterViewChecked {
           this.repertoryDataGrid(repertoires);
         });
       });
-  }
-
-  ngAfterViewChecked() {
-    if (!this.jqxGridPagerDisabled && this.isMoviePlaying) {
-      // tslint:disable-next-line: max-line-length
-      const pager = document.getElementsByClassName('jqx-clear jqx-position-absolute jqx-grid-statusbar jqx-widget-header')[0] as HTMLElement;
-      pager.style.backgroundColor = '#c9c9c9';
-      this.jqxGridPagerDisabled = true;
-    }
   }
 
   repertoryDataGrid(repertoires: Repertory[]) {

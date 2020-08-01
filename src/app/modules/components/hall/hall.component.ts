@@ -154,14 +154,6 @@ export class HallComponent implements OnInit, AfterViewChecked {
         const converted = element as HTMLElement;
         converted.style.border = 'none';
       });
-
-      // tslint:disable-next-line: max-line-length
-      const pager = document.getElementsByClassName('jqx-clear jqx-position-absolute jqx-grid-statusbar jqx-widget-header')[0] as HTMLElement;
-      this.pagerHeight = +pager.style.height.split('px')[0];
-
-      this.jqxGridDiv = document.getElementsByClassName('jqx-grid jqx-reset jqx-rc-all jqx-widget jqx-widget-content')[0] as HTMLElement;
-      this.jqxGridDiv.style.border = 'black';
-      this.jqxGridHeight =  +this.jqxGridDiv.style.height.split('px')[0];
     }
 
     this.renderSeats();
